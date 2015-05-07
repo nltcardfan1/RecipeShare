@@ -20,5 +20,6 @@ namespace RecipeShare.Models
         public string Name { get; set; }
 
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
+
     }
 }

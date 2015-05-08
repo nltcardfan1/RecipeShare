@@ -2,9 +2,9 @@ using System.Data.Entity;
 
 namespace RecipeShare.Models
 {
-	public class RecipeShare : DbContext
+	public class RecipeShareDbContext : DbContext
 	{
-		public RecipeShare()
+		public RecipeShareDbContext()
 			: base("name=RecipeShare")
 		{
 		}

@@ -31,6 +31,8 @@ namespace RecipeShare.Models
 
 		public virtual DbSet<FoodModel.FoodGroup> FoodGroups { get; set; }
 
+		public virtual DbSet<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
+
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<AspNetRole>()
@@ -47,6 +49,7 @@ namespace RecipeShare.Models
 				.HasMany(e => e.AspNetUserLogins)
 				.WithRequired(e => e.AspNetUser)
 				.HasForeignKey(e => e.UserId);
+
 		}
 	}
 }

@@ -190,6 +190,18 @@
     <Compile Include="Migrations\201505071853268_LotsOStuff2.Designer.cs">
       <DependentUpon>201505071853268_LotsOStuff2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505080258282_Recipe food group update again.cs" />
+    <Compile Include="Migrations\201505080258282_Recipe food group update again.Designer.cs">
+      <DependentUpon>201505080258282_Recipe food group update again.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505080308473_work maybe.cs" />
+    <Compile Include="Migrations\201505080308473_work maybe.Designer.cs">
+      <DependentUpon>201505080308473_work maybe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505080335597_fix db for now.cs" />
+    <Compile Include="Migrations\201505080335597_fix db for now.Designer.cs">
+      <DependentUpon>201505080335597_fix db for now.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs" />
@@ -198,6 +210,7 @@
     <Compile Include="Models\AspNetUserLogin.cs" />
     <Compile Include="Models\C__MigrationHistory.cs" />
     <Compile Include="Models\FoodModel.cs" />
+    <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RecipeModel.cs" />
@@ -290,6 +303,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505071853268_LotsOStuff2.resx">
       <DependentUpon>201505071853268_LotsOStuff2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080258282_Recipe food group update again.resx">
+      <DependentUpon>201505080258282_Recipe food group update again.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080308473_work maybe.resx">
+      <DependentUpon>201505080308473_work maybe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505080335597_fix db for now.resx">
+      <DependentUpon>201505080335597_fix db for now.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

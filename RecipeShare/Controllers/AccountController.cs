@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using RecipeShare.App_Code;
 using RecipeShare.Models;
 
 namespace RecipeShare.Controllers
@@ -79,6 +80,7 @@ namespace RecipeShare.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+					Logging.LogInfo("Get successful for userid : " + User.Identity.GetUserId(),true);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

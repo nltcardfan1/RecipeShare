@@ -20,7 +20,7 @@ namespace RecipeShare.Models
 			////Id of member List
 			public ICollection<AspNetUser> Members { get; set; }
 
-			//public ICollection<RecipeModel.Recipe> Recipes { get; set; }
+			public ICollection<RecipeModel.Recipe> Recipes { get; set; }
 
 		}
 

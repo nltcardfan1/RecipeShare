@@ -59,6 +59,8 @@ namespace RecipeShare.Models
 			public int? CookTimeMinutes { get; set; }
 
 			public virtual ICollection<Instruction> Instructions  { get; set; }
+
+			public virtual ICollection<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
 			
 		}
 	}

@@ -50,6 +50,16 @@ namespace RecipeShare.Models
 				.WithRequired(e => e.AspNetUser)
 				.HasForeignKey(e => e.UserId);
 
+			modelBuilder.Entity<GroupModel.RecipeGroup>()
+				.HasMany(x => x.Members)
+				.WithMany(x => x.RecipeGroups)
+				.Map(t => t.ToTable("RecipeGroupUsers")
+					.MapLeftKey("AspNetUserId")
+					.MapRightKey("RecipeGroupId"));
+			
+			//modelBuilder.Properties<GroupModel.RecipeGroup>()
+			//	.Where(x => x.)
+
 		}
 	}
 }

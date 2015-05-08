@@ -55,5 +55,7 @@ namespace RecipeShare.Models
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
 
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
+
+	    public virtual ICollection<GroupModel.RecipeGroup> RecipeGroups { get; set; }
     }
 }

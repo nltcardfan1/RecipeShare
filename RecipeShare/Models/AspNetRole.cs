@@ -22,4 +22,14 @@ namespace RecipeShare.Models
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
 
     }
+
+	//used like an enum to get strings to compare to roles. see http://stackoverflow.com/questions/630803/associating-enums-with-strings-in-c-sharp
+	//super genius
+	public class RoleType
+	{
+		private RoleType(string value) { Value = value; }
+		public string Value { get; set; }
+
+		public static RoleType SuperAdmin {get{ return new RoleType("SuperAdmin");}}
+	}
 }

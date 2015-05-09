@@ -33,6 +33,10 @@ namespace RecipeShare.Models
 
 		public virtual DbSet<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
 
+		public virtual DbSet<App_Code.LogTypeLookup> LogTypeLookup { get; set; }
+
+		public virtual DbSet<App_Code.Log> Logs { get; set; }
+
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<AspNetRole>()

@@ -211,6 +211,18 @@
     <Compile Include="Migrations\201505081429079_recipe group recipes.Designer.cs">
       <DependentUpon>201505081429079_recipe group recipes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505090038324_logging.cs" />
+    <Compile Include="Migrations\201505090038324_logging.Designer.cs">
+      <DependentUpon>201505090038324_logging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505090049291_logging1.cs" />
+    <Compile Include="Migrations\201505090049291_logging1.Designer.cs">
+      <DependentUpon>201505090049291_logging1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505090051240_logging update name in db.cs" />
+    <Compile Include="Migrations\201505090051240_logging update name in db.Designer.cs">
+      <DependentUpon>201505090051240_logging update name in db.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs" />
@@ -329,6 +341,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505081429079_recipe group recipes.resx">
       <DependentUpon>201505081429079_recipe group recipes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505090038324_logging.resx">
+      <DependentUpon>201505090038324_logging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505090049291_logging1.resx">
+      <DependentUpon>201505090049291_logging1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505090051240_logging update name in db.resx">
+      <DependentUpon>201505090051240_logging update name in db.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

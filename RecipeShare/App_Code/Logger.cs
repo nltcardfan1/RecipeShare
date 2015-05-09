@@ -369,7 +369,13 @@ namespace RecipeShare.App_Code
 		WARNING = 1
 	}
 
-	public class ErrorModel
+	public enum LogType : int
+	{
+		Error = 1,
+		Information = 2
+	}
+
+	public class Log
 	{
 		public int Id { get; set; }
 
@@ -382,7 +388,7 @@ namespace RecipeShare.App_Code
 		public string Exception { get; set; }
 	}
 
-	public class LogType
+	public class LogTypeLookup
 	{
 		public int Id { get; set; }
 

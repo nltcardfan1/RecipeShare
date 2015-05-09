@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+using RecipeShare.App_Code;
+
 namespace RecipeShare.Migrations
 {
     using System;
@@ -26,6 +30,13 @@ namespace RecipeShare.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+			context.LogTypeLookup.AddOrUpdate(
+				x => x.Type,
+				new LogTypeLookup {Id = 1, Type = "Error"},
+				new LogTypeLookup {Id = 2, Type = "Information"});
+
+
         }
     }
 }

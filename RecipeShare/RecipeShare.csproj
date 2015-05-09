@@ -155,7 +155,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Code\Logger.cs" />
+    <Compile Include="Models\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201505090051240_logging update name in db.cs" />
     <Compile Include="Migrations\201505090051240_logging update name in db.Designer.cs">
       <DependentUpon>201505090051240_logging update name in db.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505091942075_stuff.cs" />
+    <Compile Include="Migrations\201505091942075_stuff.Designer.cs">
+      <DependentUpon>201505091942075_stuff.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -297,6 +301,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Logs_App\" />
     <Folder Include="Logs_Error\" />
@@ -350,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505090051240_logging update name in db.resx">
       <DependentUpon>201505090051240_logging update name in db.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505091942075_stuff.resx">
+      <DependentUpon>201505091942075_stuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

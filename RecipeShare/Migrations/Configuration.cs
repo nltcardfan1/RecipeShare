@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using RecipeShare.App_Code;
+using RecipeShare.Models;
 
 namespace RecipeShare.Migrations
 {

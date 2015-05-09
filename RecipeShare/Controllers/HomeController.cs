@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using RecipeShare.App_Code;
+using RecipeShare.Models;
 
 namespace RecipeShare.Controllers
 {
@@ -11,7 +11,6 @@ namespace RecipeShare.Controllers
 	{
 		public ActionResult Index()
 		{
-			Logger.LogInfo("fadsf");
 			return View();
 		}
 

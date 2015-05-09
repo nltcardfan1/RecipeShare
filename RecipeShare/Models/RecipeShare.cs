@@ -19,23 +19,23 @@ namespace RecipeShare.Models
 
 		public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
-		public virtual DbSet<RecipeModel.RecipeCategory> RecipeCategories { get; set; }
+		public DbSet<RecipeModel.RecipeCategory> RecipeCategories { get; set; }
 
-		public virtual DbSet<RecipeModel.Instruction> Instructions { get; set; }
+		public DbSet<RecipeModel.Instruction> Instructions { get; set; }
 
-		public virtual DbSet<RecipeModel.Recipe> Recipes  { get; set; }
+		public DbSet<RecipeModel.Recipe> Recipes  { get; set; }
 
-		public virtual DbSet<RecipeModel.Ingredient> Ingredients { get; set; }
+		public DbSet<RecipeModel.Ingredient> Ingredients { get; set; }
 
-		public virtual DbSet<FoodModel.Food> Foods { get; set; }
+		public DbSet<FoodModel.Food> Foods { get; set; }
 
-		public virtual DbSet<FoodModel.FoodGroup> FoodGroups { get; set; }
+		public DbSet<FoodModel.FoodGroup> FoodGroups { get; set; }
 
-		public virtual DbSet<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
+		public DbSet<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
 
-		public virtual DbSet<App_Code.LogTypeLookup> LogTypeLookup { get; set; }
+		public DbSet<LogTypeLookup> LogTypeLookup { get; set; }
 
-		public virtual DbSet<App_Code.Log> Logs { get; set; }
+		public DbSet<Log> Logs { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

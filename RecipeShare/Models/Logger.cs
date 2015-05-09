@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using RecipeShare.Models;
 
-namespace RecipeShare.App_Code
+namespace RecipeShare.Models
 {
 	/// <summary>
 	/// Class for Loging events in sites
@@ -110,7 +111,7 @@ namespace RecipeShare.App_Code
 		/// </param>
 		public static void LogInfo(string info)
 		{
-			LogInfo(info,false);
+			LogInfo(info,false, null);
 		}
 
 		/// <summary>
@@ -122,23 +123,21 @@ namespace RecipeShare.App_Code
 		/// /// <param name="includeAdditionalInfo">
 		/// In true, additional info about request, session etc. will be included into log record
 		/// </param>
-		public static void LogInfo(string info,bool includeAdditionalInfo)
+		public static void LogInfo(string info,bool includeAdditionalInfo, int? userId)
 		{
 			if(HttpContext.Current != null && HttpContext.Current.Request != null)
 			{
+				RecipeShare.Models.Log log = new Log();
 				StringBuilder stb = new StringBuilder();
 				stb.Append("<Activity>");
 				stb.AppendLine();
-				stb.AppendFormat("<DateTime>{0}</DateTime>",DateTime.Now);
+				stb.AppendFormat("<Message>{0}</Message>",info);
 				stb.AppendLine();
 				stb.AppendFormat("<SessionID>{0}</SessionID>",HttpContext.Current.Session.SessionID);
 				stb.AppendLine();
 				stb.AppendFormat("<Summary>Some info was loged on {0} {1}</Summary>",DateTime.Now.ToLongDateString(),DateTime.Now.ToLongTimeString());
 				stb.AppendLine();
 				stb.AppendFormat("<Page>{0}</Page>",HttpContext.Current.Request.Url.Host + HttpContext.Current.Request.Url.PathAndQuery);
-				stb.AppendLine();
-				stb.AppendLine();
-				stb.AppendFormat("<Message>{0}</Message>",info);
 				stb.AppendLine();
 				stb.AppendLine();
 				if(includeAdditionalInfo)
@@ -176,36 +175,47 @@ namespace RecipeShare.App_Code
 						stb.AppendLine();
 					}
 
-					if(HttpContext.Current.Session["UserID"] != null && Convert.ToString(HttpContext.Current.Session["UserID"]) != string.Empty)
-					{
-						stb.AppendFormat("<User type=\"User\">{0}</User>",HttpContext.Current.Session["UserID"].ToString());
-					}
-					else if(HttpContext.Current.Session["AdminUserID"] != null && Convert.ToString(HttpContext.Current.Session["AdminUserID"]) != string.Empty)
-					{
-						stb.AppendFormat("<User type=\"Admin\">{0}</User>",HttpContext.Current.Session["AdminUserID"].ToString());
-					}
-					else
-					{
-						stb.AppendFormat("<User type=\"Guest\">{0}</User>","Guest");
-					}
 
-					stb.AppendLine();
-					stb.AppendLine();
-					stb.AppendFormat("<ElementsInSession>{0}</ElementsInSession>",HttpContext.Current.Session.Count);
-					stb.AppendLine();
-					stb.AppendFormat("<ElementsInCache>{0}</ElementsInCache>",HttpContext.Current.Cache.Count);
-					stb.AppendLine();
+					if (userId == null && HttpContext.Current.Session["UserID"] != null &&
+					    Convert.ToString(HttpContext.Current.Session["UserID"]) != string.Empty)
+					{
+						//stb.AppendFormat("<User type=\"User\">{0}</User>",HttpContext.Current.Session["UserID"].ToString());
+						log.UserId = Convert.ToInt32(HttpContext.Current.Session["UserID"]);
+					}
+					else if(userId != null)
+					{
+						log.UserId = userId;
+					}
+					//else if(HttpContext.Current.Session["AdminUserID"] != null && Convert.ToString(HttpContext.Current.Session["AdminUserID"]) != string.Empty)
+					//{
+					//	stb.AppendFormat("<User type=\"Admin\">{0}</User>",HttpContext.Current.Session["AdminUserID"].ToString());
+					//}
+					//else
+					//{
+					//	stb.AppendFormat("<User type=\"Guest\">{0}</User>","Guest");
+					//}
+
+					//stb.AppendLine();
+					//stb.AppendLine();
+					//stb.AppendFormat("<ElementsInSession>{0}</ElementsInSession>",HttpContext.Current.Session.Count);
+					//stb.AppendLine();
+					//stb.AppendFormat("<ElementsInCache>{0}</ElementsInCache>",HttpContext.Current.Cache.Count);
+					//stb.AppendLine();
 				}
-				stb.AppendLine();
-				stb.AppendLine();
-				stb.Append("</Activity>");
-				stb.AppendLine();
-				stb.AppendLine();
-				lock(typeof(Logger))
-				{
-					WriteToFile(stb,true);
-					//WriteToFile(stb, false);
-				}
+
+				log.Message = stb.ToString();
+				log.LogType = LogType.Information;
+				LogToDatabase(log);
+				//stb.AppendLine();
+				//stb.AppendLine();
+				//stb.Append("</Activity>");
+				//stb.AppendLine();
+				//stb.AppendLine();
+				//lock(typeof(Logger))
+				//{
+				//	WriteToFile(stb,true);
+				//	//WriteToFile(stb, false);
+				//}
 			}
 		}
 
@@ -218,7 +228,7 @@ namespace RecipeShare.App_Code
 		/// </param>
 		public static void LogException(Exception er)
 		{
-			LogException(er,string.Empty,ErrorLevel.ERROR);
+			LogException(er,string.Empty,LogType.Error);
 		}
 
 		/// <summary>
@@ -232,7 +242,7 @@ namespace RecipeShare.App_Code
 		/// </param>
 		public static void LogException(Exception er,string strMessage)
 		{
-			LogException(er,string.Empty,ErrorLevel.ERROR);
+			LogException(er,string.Empty,LogType.Error);
 		}
 
 		/// <summary>
@@ -247,27 +257,27 @@ namespace RecipeShare.App_Code
 		/// <param name="errLevel">
 		/// error level
 		/// </param>
-		public static void LogException(Exception er,string strMessage,ErrorLevel errLevel)
+		public static void LogException(Exception er,string strMessage,LogType logType)
 		{
 
 			if(HttpContext.Current != null && HttpContext.Current.Request != null && er != null && !(er is System.Threading.ThreadAbortException))
 			{
 				try
 				{
+					Log log = new Log();
 					StringBuilder stb = new StringBuilder();
 					stb.Append("<Exception>");
-					stb.AppendLine();
-					stb.AppendFormat("<DateTime>{0}</DateTime>",DateTime.Now);
-					stb.AppendLine();
-					stb.AppendFormat("<SessionID>{0}</SessionID>",HttpContext.Current.Session.SessionID);
-					stb.AppendLine();
-					stb.AppendFormat("<Summary>An unhandled exception occured on {0} {1}",DateTime.Now.ToLongDateString(),DateTime.Now.ToLongTimeString() + "</Summary>");
 					stb.AppendLine();
 					if(strMessage != string.Empty)
 					{
 						stb.AppendFormat("<CustomMessage>{0}</CustomMessage>",strMessage);
 						stb.AppendLine();
 					}
+					stb.AppendFormat("<SessionID>{0}</SessionID>",HttpContext.Current.Session.SessionID);
+					stb.AppendLine();
+					stb.AppendFormat("<Summary>An unhandled exception occured on {0} {1}",DateTime.Now.ToLongDateString(),DateTime.Now.ToLongTimeString() + "</Summary>");
+					stb.AppendLine();
+					
 					stb.Append("<Info>");
 					stb.AppendLine();
 					stb.AppendFormat("<Verb>{0}</Verb>",HttpContext.Current.Request.RequestType);
@@ -303,25 +313,32 @@ namespace RecipeShare.App_Code
 
 					if(HttpContext.Current.Session["UserID"] != null && Convert.ToString(HttpContext.Current.Session["UserID"]) != string.Empty)
 					{
-						stb.AppendFormat("<User type=\"User\">{0}</User>",HttpContext.Current.Session["UserID"].ToString());
+						//stb.AppendFormat("<User type=\"User\">{0}</User>",HttpContext.Current.Session["UserID"].ToString());
+						log.UserId = Convert.ToInt32(HttpContext.Current.Session["UserID"].ToString());
 					}
-					else if(HttpContext.Current.Session["AdminUserID"] != null && Convert.ToString(HttpContext.Current.Session["AdminUserID"]) != string.Empty)
-					{
-						stb.AppendFormat("<User type=\"Admin\">{0}</User>",HttpContext.Current.Session["AdminUserID"].ToString());
-					}
+					//else if(HttpContext.Current.Session["AdminUserID"] != null && Convert.ToString(HttpContext.Current.Session["AdminUserID"]) != string.Empty)
+					//{
+					//	stb.AppendFormat("<User type=\"Admin\">{0}</User>",HttpContext.Current.Session["AdminUserID"].ToString());
+					//}
 					else
 					{
 						stb.AppendFormat("<User>{0}</User>","Guest");
 					}
 
 					stb.AppendLine();
+					stb.AppendLine();
+					stb.AppendLine();
+					stb.Append("</Exception>");
 
-					stb.AppendFormat("<ErrorMessage>{0}</ErrorMessage>",er.ToString());
+					StringBuilder errorStringBuilder = new StringBuilder();
 
+					errorStringBuilder.AppendFormat("<ErrorMessage>{0}</ErrorMessage>",er.ToString());
+
+					
 					if(er.InnerException != null)
 					{
-						stb.AppendLine();
-						stb.AppendFormat("<InnerException>{0}</InnerException>",er.InnerException.ToString());
+						errorStringBuilder.AppendLine();
+						errorStringBuilder.AppendFormat("<InnerException>{0}</InnerException>",er.InnerException.ToString());
 					}
 					//if (er.StackTrace != null)
 					//{
@@ -329,9 +346,7 @@ namespace RecipeShare.App_Code
 					//    stb.AppendFormat("<StackTrace>{0}</StackTrace>", er.StackTrace);
 					//}
 
-					stb.AppendLine();
-					stb.AppendLine();
-					stb.Append("</Exception>");
+					
 					//stb.AppendFormat("Count of elements in Session: {0}", HttpContext.Current.Session.Count);
 					//stb.AppendLine();
 					//stb.AppendFormat("Count of elements in Cache: {0}", HttpContext.Current.Cache.Count);
@@ -341,20 +356,30 @@ namespace RecipeShare.App_Code
 					stb.AppendLine();
 					lock(typeof(Logger))
 					{
-						WriteToFile(stb,false);
+						//WriteToFile(stb,false);
 						//WriteToFile(stb, false);
 					}
 
-					if(errLevel == ErrorLevel.FATAL_ERROR)
-					{
-						//Send Email to admin code
-					}
+					log.Message = stb.ToString();
+					log.Exception = errorStringBuilder.ToString();
+					log.DateTime = DateTime.Now;
+					log.LogType = logType;
+					LogToDatabase(log);
 				}
 				catch(Exception)
 				{
 					//do nothing for now
 				}
 			}
+		}
+
+		public static void LogToDatabase(Log log)
+		{
+			var dbContext = new Models.RecipeShareDbContext();
+			log.DateTime = DateTime.Now;
+			dbContext.Logs.Add(log);
+			dbContext.SaveChanges();
+
 		}
 
 	}
@@ -380,6 +405,8 @@ namespace RecipeShare.App_Code
 		public int Id { get; set; }
 
 		public int? UserId { get; set; }
+
+		public DateTime DateTime { get; set; }
 
 		public LogType LogType { get; set; }
 

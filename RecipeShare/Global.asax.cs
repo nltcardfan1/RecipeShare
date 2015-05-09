@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using RecipeShare.App_Code;
+using RecipeShare.Models;
 
 //using RecipeShare.App_Code;
 

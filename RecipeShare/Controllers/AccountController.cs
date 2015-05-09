@@ -80,7 +80,7 @@ namespace RecipeShare.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-					Logging.LogInfo("Get successful for userid : " + User.Identity.GetUserId(),true);
+					Logger.LogInfo("Get successful for userid : " + User.Identity.GetUserId(),true);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

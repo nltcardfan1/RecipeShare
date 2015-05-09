@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using RecipeShare.App_Code;
 
+//using RecipeShare.App_Code;
 
 namespace RecipeShare
 {
@@ -23,7 +24,7 @@ namespace RecipeShare
 		void Application_Error(object sender,EventArgs e)
 		{
 			// Code that runs when an unhandled error occurs
-			Logging.LogException(Server.GetLastError(),"Global Error");
+			Logger.LogException(Server.GetLastError(),"Global Error");
 		}
     }
 }

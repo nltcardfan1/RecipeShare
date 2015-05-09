@@ -155,7 +155,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Data\Logging.cs" />
+    <Compile Include="App_Code\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -285,7 +285,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Logs_App\" />
+    <Folder Include="Logs_Error\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

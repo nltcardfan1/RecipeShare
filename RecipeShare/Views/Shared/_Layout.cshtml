@@ -29,9 +29,9 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
 	                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-					@if(User.IsInRole(RoleType.SuperAdmin.Value))
+					@if(User.Identity.IsAuthenticated)
 					{
-						<li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+						<li>@Html.ActionLink("Profile", "Index", "Profile")</li>
 					}
                 </ul>
                 @Html.Partial("_LoginPartial")

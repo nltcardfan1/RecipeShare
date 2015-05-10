@@ -99,7 +99,7 @@ namespace RecipeShare.Controllers
 			int userId = Convert.ToInt32(User.Identity.GetUserId());
 			Logger.LogInfo(string.Format("Log in for UserId : {0}", userId), true, userId);
 			//return to View or Redirect again
-			return RedirectToLocal(null);
+			return RedirectToAction("Index","Profile");
 		}
 
         //

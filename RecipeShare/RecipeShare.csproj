@@ -155,6 +155,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -166,66 +167,6 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505070316311_firstnamelastname.cs" />
-    <Compile Include="Migrations\201505070316311_firstnamelastname.Designer.cs">
-      <DependentUpon>201505070316311_firstnamelastname.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505070328302_tfdsafd.cs" />
-    <Compile Include="Migrations\201505070328302_tfdsafd.Designer.cs">
-      <DependentUpon>201505070328302_tfdsafd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505070330552_delete test.cs" />
-    <Compile Include="Migrations\201505070330552_delete test.Designer.cs">
-      <DependentUpon>201505070330552_delete test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505071745294_RecipeCategory.cs" />
-    <Compile Include="Migrations\201505071745294_RecipeCategory.Designer.cs">
-      <DependentUpon>201505071745294_RecipeCategory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505071851041_LotsOStuff.cs" />
-    <Compile Include="Migrations\201505071851041_LotsOStuff.Designer.cs">
-      <DependentUpon>201505071851041_LotsOStuff.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505071853268_LotsOStuff2.cs" />
-    <Compile Include="Migrations\201505071853268_LotsOStuff2.Designer.cs">
-      <DependentUpon>201505071853268_LotsOStuff2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505080258282_Recipe food group update again.cs" />
-    <Compile Include="Migrations\201505080258282_Recipe food group update again.Designer.cs">
-      <DependentUpon>201505080258282_Recipe food group update again.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505080308473_work maybe.cs" />
-    <Compile Include="Migrations\201505080308473_work maybe.Designer.cs">
-      <DependentUpon>201505080308473_work maybe.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505080335597_fix db for now.cs" />
-    <Compile Include="Migrations\201505080335597_fix db for now.Designer.cs">
-      <DependentUpon>201505080335597_fix db for now.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505080351449_add recipegroup relationship.cs" />
-    <Compile Include="Migrations\201505080351449_add recipegroup relationship.Designer.cs">
-      <DependentUpon>201505080351449_add recipegroup relationship.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505081429079_recipe group recipes.cs" />
-    <Compile Include="Migrations\201505081429079_recipe group recipes.Designer.cs">
-      <DependentUpon>201505081429079_recipe group recipes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505090038324_logging.cs" />
-    <Compile Include="Migrations\201505090038324_logging.Designer.cs">
-      <DependentUpon>201505090038324_logging.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505090049291_logging1.cs" />
-    <Compile Include="Migrations\201505090049291_logging1.Designer.cs">
-      <DependentUpon>201505090049291_logging1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505090051240_logging update name in db.cs" />
-    <Compile Include="Migrations\201505090051240_logging update name in db.Designer.cs">
-      <DependentUpon>201505090051240_logging update name in db.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505091942075_stuff.cs" />
-    <Compile Include="Migrations\201505091942075_stuff.Designer.cs">
-      <DependentUpon>201505091942075_stuff.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -260,6 +201,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.3.0.debug.js" />
+    <Content Include="Scripts\knockout-3.3.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -305,6 +248,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Logs_App\" />
     <Folder Include="Logs_Error\" />
+    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -312,53 +256,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505070316311_firstnamelastname.resx">
-      <DependentUpon>201505070316311_firstnamelastname.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505070328302_tfdsafd.resx">
-      <DependentUpon>201505070328302_tfdsafd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505070330552_delete test.resx">
-      <DependentUpon>201505070330552_delete test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505071745294_RecipeCategory.resx">
-      <DependentUpon>201505071745294_RecipeCategory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505071851041_LotsOStuff.resx">
-      <DependentUpon>201505071851041_LotsOStuff.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505071853268_LotsOStuff2.resx">
-      <DependentUpon>201505071853268_LotsOStuff2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505080258282_Recipe food group update again.resx">
-      <DependentUpon>201505080258282_Recipe food group update again.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505080308473_work maybe.resx">
-      <DependentUpon>201505080308473_work maybe.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505080335597_fix db for now.resx">
-      <DependentUpon>201505080335597_fix db for now.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505080351449_add recipegroup relationship.resx">
-      <DependentUpon>201505080351449_add recipegroup relationship.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505081429079_recipe group recipes.resx">
-      <DependentUpon>201505081429079_recipe group recipes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505090038324_logging.resx">
-      <DependentUpon>201505090038324_logging.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505090049291_logging1.resx">
-      <DependentUpon>201505090049291_logging1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505090051240_logging update name in db.resx">
-      <DependentUpon>201505090051240_logging update name in db.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505091942075_stuff.resx">
-      <DependentUpon>201505091942075_stuff.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -82,6 +82,7 @@ namespace RecipeShare.Controllers
 					//what is this? good question
 		            var id = SignInManager.UserManager.Users.First(x => x.Email == model.Email).Id;
 					Logger.LogInfo(string.Format("Log in for UserId : {0}", SignInManager.UserManager.Users.First(x => x.Email == model.Email).Id),true,Convert.ToInt32(SignInManager.UserManager.Users.First(x => x.Email == model.Email).Id));
+					//EmailController.SendEmail(model.Email);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -160,11 +161,11 @@ namespace RecipeShare.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+					 //For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+					 //Send an email with this link
+					 //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+					 //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+					 //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return RedirectToAction("Index", "Home");
                 }

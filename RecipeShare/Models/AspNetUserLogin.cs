@@ -18,7 +18,7 @@ namespace RecipeShare.Models
 
         [Key]
         [Column(Order = 2)]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
     }

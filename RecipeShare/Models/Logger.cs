@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using Microsoft.AspNet.Identity;
 using RecipeShare.Models;
 
 namespace RecipeShare.Models
@@ -259,117 +260,115 @@ namespace RecipeShare.Models
 		/// </param>
 		public static void LogException(Exception er,string strMessage,LogType logType)
 		{
-
-			if(HttpContext.Current != null && HttpContext.Current.Request != null && er != null && !(er is System.Threading.ThreadAbortException))
+			if (HttpContext.Current == null || er == null) return;
+			try
 			{
-				try
+				Log log = new Log();
+				StringBuilder stb = new StringBuilder();
+				stb.Append("<Exception>");
+				stb.AppendLine();
+				if(strMessage != string.Empty)
 				{
-					Log log = new Log();
-					StringBuilder stb = new StringBuilder();
-					stb.Append("<Exception>");
+					stb.AppendFormat("<CustomMessage>{0}</CustomMessage>",strMessage);
 					stb.AppendLine();
-					if(strMessage != string.Empty)
-					{
-						stb.AppendFormat("<CustomMessage>{0}</CustomMessage>",strMessage);
-						stb.AppendLine();
-					}
-					stb.AppendFormat("<SessionID>{0}</SessionID>",HttpContext.Current.Session.SessionID);
-					stb.AppendLine();
-					stb.AppendFormat("<Summary>An unhandled exception occured on {0} {1}",DateTime.Now.ToLongDateString(),DateTime.Now.ToLongTimeString() + "</Summary>");
-					stb.AppendLine();
-					
-					stb.Append("<Info>");
-					stb.AppendLine();
-					stb.AppendFormat("<Verb>{0}</Verb>",HttpContext.Current.Request.RequestType);
-					stb.AppendLine();
-					stb.AppendFormat("<URL>{0}</URL>",HttpContext.Current.Request.Url.Host + HttpContext.Current.Request.Url.PathAndQuery);
-					stb.AppendLine();
-					stb.AppendFormat("<HostIP>{0}</HostIP>",HttpContext.Current.Request.UserHostAddress,HttpContext.Current.Request.UserHostName);
-					stb.AppendLine();
-					if(HttpContext.Current.Request.UrlReferrer != null)
-					{
-						stb.AppendFormat("<ReffererURL>{0}</ReffererURL>",HttpContext.Current.Request.UrlReferrer.Host + HttpContext.Current.Request.UrlReferrer.PathAndQuery);
-						stb.AppendLine();
-					}
-					stb.Append("</Info>");
-					stb.AppendLine();
-					if(HttpContext.Current.Request.Browser != null)
-					{
-						stb.Append("<Browser>");
-						stb.AppendLine();
-						stb.AppendFormat("<Name>{0}</Name>",HttpContext.Current.Request.Browser.Browser);
-						stb.AppendLine();
-						stb.AppendFormat("<Version>{0}</Version>",HttpContext.Current.Request.Browser.Version);
-						stb.AppendLine();
-						stb.AppendFormat("<CookieSupport>{0}</CookieSupport>",HttpContext.Current.Request.Browser.Cookies);
-						stb.AppendLine();
-						stb.AppendFormat("<JSSupport>{0}</JSSupport>",HttpContext.Current.Request.Browser.EcmaScriptVersion.Major > 0);
-						stb.AppendLine();
-						stb.AppendFormat("<Platform>{0}</Platform>",HttpContext.Current.Request.Browser.Platform);
-						stb.AppendLine();
-						stb.Append("</Browser>");
-						stb.AppendLine();
-					}
-
-					if(HttpContext.Current.Session["UserID"] != null && Convert.ToString(HttpContext.Current.Session["UserID"]) != string.Empty)
-					{
-						//stb.AppendFormat("<User type=\"User\">{0}</User>",HttpContext.Current.Session["UserID"].ToString());
-						log.UserId = Convert.ToInt32(HttpContext.Current.Session["UserID"].ToString());
-					}
-					//else if(HttpContext.Current.Session["AdminUserID"] != null && Convert.ToString(HttpContext.Current.Session["AdminUserID"]) != string.Empty)
-					//{
-					//	stb.AppendFormat("<User type=\"Admin\">{0}</User>",HttpContext.Current.Session["AdminUserID"].ToString());
-					//}
-					else
-					{
-						stb.AppendFormat("<User>{0}</User>","Guest");
-					}
-
-					stb.AppendLine();
-					stb.AppendLine();
-					stb.AppendLine();
-					stb.Append("</Exception>");
-
-					StringBuilder errorStringBuilder = new StringBuilder();
-
-					errorStringBuilder.AppendFormat("<ErrorMessage>{0}</ErrorMessage>",er.ToString());
-
-					
-					if(er.InnerException != null)
-					{
-						errorStringBuilder.AppendLine();
-						errorStringBuilder.AppendFormat("<InnerException>{0}</InnerException>",er.InnerException.ToString());
-					}
-					//if (er.StackTrace != null)
-					//{
-					//    stb.AppendLine();
-					//    stb.AppendFormat("<StackTrace>{0}</StackTrace>", er.StackTrace);
-					//}
-
-					
-					//stb.AppendFormat("Count of elements in Session: {0}", HttpContext.Current.Session.Count);
-					//stb.AppendLine();
-					//stb.AppendFormat("Count of elements in Cache: {0}", HttpContext.Current.Cache.Count);
-					//stb.AppendLine();
-
-					stb.AppendLine();
-					stb.AppendLine();
-					lock(typeof(Logger))
-					{
-						//WriteToFile(stb,false);
-						//WriteToFile(stb, false);
-					}
-
-					log.Message = stb.ToString();
-					log.Exception = errorStringBuilder.ToString();
-					log.DateTime = DateTime.Now;
-					log.LogType = logType;
-					LogToDatabase(log);
 				}
-				catch(Exception)
+				stb.AppendFormat("<SessionID>{0}</SessionID>",HttpContext.Current.Session.SessionID);
+				stb.AppendLine();
+				stb.AppendFormat("<Summary>An unhandled exception occured on {0} {1}",DateTime.Now.ToLongDateString(),DateTime.Now.ToLongTimeString() + "</Summary>");
+				stb.AppendLine();
+					
+				stb.Append("<Info>");
+				stb.AppendLine();
+				stb.AppendFormat("<Verb>{0}</Verb>",HttpContext.Current.Request.RequestType);
+				stb.AppendLine();
+				stb.AppendFormat("<URL>{0}</URL>",HttpContext.Current.Request.Url.Host + HttpContext.Current.Request.Url.PathAndQuery);
+				stb.AppendLine();
+				stb.AppendFormat("<HostIP>{0}</HostIP>",HttpContext.Current.Request.UserHostAddress,HttpContext.Current.Request.UserHostName);
+				stb.AppendLine();
+				if(HttpContext.Current.Request.UrlReferrer != null)
 				{
-					//do nothing for now
+					stb.AppendFormat("<ReffererURL>{0}</ReffererURL>",HttpContext.Current.Request.UrlReferrer.Host + HttpContext.Current.Request.UrlReferrer.PathAndQuery);
+					stb.AppendLine();
 				}
+				stb.Append("</Info>");
+				stb.AppendLine();
+				if(HttpContext.Current.Request.Browser != null)
+				{
+					stb.Append("<Browser>");
+					stb.AppendLine();
+					stb.AppendFormat("<Name>{0}</Name>",HttpContext.Current.Request.Browser.Browser);
+					stb.AppendLine();
+					stb.AppendFormat("<Version>{0}</Version>",HttpContext.Current.Request.Browser.Version);
+					stb.AppendLine();
+					stb.AppendFormat("<CookieSupport>{0}</CookieSupport>",HttpContext.Current.Request.Browser.Cookies);
+					stb.AppendLine();
+					stb.AppendFormat("<JSSupport>{0}</JSSupport>",HttpContext.Current.Request.Browser.EcmaScriptVersion.Major > 0);
+					stb.AppendLine();
+					stb.AppendFormat("<Platform>{0}</Platform>",HttpContext.Current.Request.Browser.Platform);
+					stb.AppendLine();
+					stb.Append("</Browser>");
+					stb.AppendLine();
+				}
+
+				if(HttpContext.Current.Session["UserID"] != null && Convert.ToString(HttpContext.Current.Session["UserID"]) != string.Empty)
+				{
+					//stb.AppendFormat("<User type=\"User\">{0}</User>",HttpContext.Current.Session["UserID"].ToString());
+					log.UserId = Convert.ToInt32(HttpContext.Current.Session["UserID"].ToString());
+				}
+				//else if(HttpContext.Current.Session["AdminUserID"] != null && Convert.ToString(HttpContext.Current.Session["AdminUserID"]) != string.Empty)
+				//{
+				//	stb.AppendFormat("<User type=\"Admin\">{0}</User>",HttpContext.Current.Session["AdminUserID"].ToString());
+				//}
+				else
+				{
+					stb.AppendFormat("<User>{0}</User>","Guest");
+				}
+
+				stb.AppendLine();
+				stb.AppendLine();
+				stb.AppendLine();
+				stb.Append("</Exception>");
+
+				StringBuilder errorStringBuilder = new StringBuilder();
+
+				errorStringBuilder.AppendFormat("<ErrorMessage>{0}</ErrorMessage>",er.ToString());
+
+					
+				if(er.InnerException != null)
+				{
+					errorStringBuilder.AppendLine();
+					errorStringBuilder.AppendFormat("<InnerException>{0}</InnerException>",er.InnerException.ToString());
+				}
+				//if (er.StackTrace != null)
+				//{
+				//    stb.AppendLine();
+				//    stb.AppendFormat("<StackTrace>{0}</StackTrace>", er.StackTrace);
+				//}
+
+					
+				//stb.AppendFormat("Count of elements in Session: {0}", HttpContext.Current.Session.Count);
+				//stb.AppendLine();
+				//stb.AppendFormat("Count of elements in Cache: {0}", HttpContext.Current.Cache.Count);
+				//stb.AppendLine();
+
+				stb.AppendLine();
+				stb.AppendLine();
+				lock(typeof(Logger))
+				{
+					//WriteToFile(stb,false);
+					//WriteToFile(stb, false);
+				}
+
+				log.Message = stb.ToString();
+				log.UserId = Convert.ToInt32(HttpContext.Current.User.Identity.GetUserId());
+				log.Exception = errorStringBuilder.ToString();
+				log.DateTime = DateTime.Now;
+				log.LogType = logType;
+				LogToDatabase(log);
+			}
+			catch(Exception ex)
+			{
+				//do nothing for now
 			}
 		}
 

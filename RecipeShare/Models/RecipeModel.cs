@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -58,9 +59,13 @@ namespace RecipeShare.Models
 
 			public int? CookTimeMinutes { get; set; }
 
+			public int AspNetUserId { get; set; }
+
 			public virtual ICollection<Instruction> Instructions  { get; set; }
 
 			public virtual ICollection<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
+
+			public virtual AspNetUser CreatedByUser { get; set; }
 			
 		}
 	}

@@ -79,11 +79,9 @@ namespace RecipeShare.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-					//what is this? good question
-		            var id = SignInManager.UserManager.Users.First(x => x.Email == model.Email).Id;
-					Logger.LogInfo(string.Format("Log in for UserId : {0}", SignInManager.UserManager.Users.First(x => x.Email == model.Email).Id),true,Convert.ToInt32(SignInManager.UserManager.Users.First(x => x.Email == model.Email).Id));
+					return RedirectToAction("DoWork","Account");
 					//EmailController.SendEmail(model.Email);
-                    return RedirectToLocal(returnUrl);
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -94,6 +92,15 @@ namespace RecipeShare.Controllers
                     return View(model);
             }
         }
+
+		public async Task<ActionResult> DoWork()
+		{
+			//this works
+			int userId = Convert.ToInt32(User.Identity.GetUserId());
+			Logger.LogInfo(string.Format("Log in for UserId : {0}", userId), true, userId);
+			//return to View or Redirect again
+			return RedirectToLocal(null);
+		}
 
         //
         // GET: /Account/VerifyCode
@@ -486,4 +493,5 @@ namespace RecipeShare.Controllers
         }
         #endregion
     }
+
 }

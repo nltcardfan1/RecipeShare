@@ -68,6 +68,11 @@ namespace RecipeShare.Models
 					.MapLeftKey("RecipeGroupId")
 					.MapRightKey("RecipeId"));
 
+			//modelBuilder.Entity<RecipeModel.Recipe>()
+			//	.HasRequired(x => x.CreatedByUserId)
+			//	.WithMany(x => x.Recipes)
+			//	.HasForeignKey(x => x.CreatedByUserId);
+
 		}
 	}
 }

@@ -11,8 +11,7 @@ namespace RecipeShare.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(128)]
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public string ClaimType { get; set; }
 

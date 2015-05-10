@@ -17,7 +17,7 @@ namespace RecipeShare.Models
             AspNetRoles = new HashSet<AspNetRole>();
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(256)]
         public string Email { get; set; }
@@ -57,5 +57,7 @@ namespace RecipeShare.Models
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
 
 	    public virtual ICollection<GroupModel.RecipeGroup> RecipeGroups { get; set; }
+
+		public virtual ICollection<RecipeModel.Recipe> Recipes { get; set; } 
     }
 }

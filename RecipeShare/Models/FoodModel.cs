@@ -22,7 +22,7 @@ namespace RecipeShare.Models
 		{
 			public int Id { get; set; }
 
-			public int Name { get; set; }
+			public string Name { get; set; }
 
 			public virtual ICollection<Food> Foods  { get; set; }
 		}

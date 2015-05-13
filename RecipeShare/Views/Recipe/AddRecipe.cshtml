@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "AddRecipe";
+}
+<script src="~/KOScripts/Recipe.js"></script>
+<h2>AddRecipe</h2>
+
+<body>
+
+<select data-bind="
+          options: foods,
+          optionsText: 'name',
+          optionsValue: 'id'"></select>
+<input type="text" data-bind="text:test"/>
+	<input type="button" data-bind="click:alert"/>
+</body>

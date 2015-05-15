@@ -21,19 +21,25 @@ namespace RecipeShare
 
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js",
-					  "~/Scripts/respond.js"));
+					  "~/Scripts/respond.js",
+					  "~/Scripts/DataTables/jquery.dataTables.js",
+					  "~/Scripts/jquery-ui.js"));
 			#if DEBUG
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css",
 					  "~/Content/style.css",
-					  "~/Content/font-awesome.css"));
+					  "~/Content/font-awesome.css",
+					  "~/Content/DataTables/css/jquery.dataTables.css",
+					  "~/Content/jquery-ui.css"));
 			#else 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.min.css",
 					  "~/Content/site.css",
 					  "~/Content/style.css",
-					  "~/Content/font-awesome.min.css"));
+					  "~/Content/font-awesome.min.css",
+					  "~/Content/DataTables/css/jquery.dataTables.min.css",
+					  "~/Content/jquery-ui.css"));
 #endif
 		}
 	}

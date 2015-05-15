@@ -24,8 +24,6 @@ namespace RecipeShare.Models
 
 			public string Name { get; set; }
 
-			public string Bob { get; set; }
-
 			public virtual ICollection<Food> Foods  { get; set; }
 		}
 	}

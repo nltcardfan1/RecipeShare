@@ -15,17 +15,17 @@ namespace RecipeShare.Controllers
         {
             return View();
         }
-
-	    public JsonResult GetFoods()
+	    public JsonResult GetFoods(string search)
 	    {
 		    var dbContext = new RecipeShareDbContext();
-		    var stuffs = dbContext.Foods.Select(x => new
+		    var stuffs = dbContext.Foods.Where(x => x.Name.Contains(search))
+			.Select(x => new
 		    {
 			    id = x.Id,
 			    foodGroup = x.FoodGroupId,
 			    name = x.Name
 		    }).ToList();
-		    return Json(stuffs);
+		    return Json(stuffs, JsonRequestBehavior.AllowGet);
 	    }
     }
 }

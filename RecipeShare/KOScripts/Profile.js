@@ -8,12 +8,16 @@
 //	//self.UserName = ko.observable();
 //}
 
-var ProfileVM = {
-	userId: ko.observable(),
-	firstName: ko.observable(),
-	lastName: ko.observable(),
-	recipes: ko.observableArray(),
-	groups: ko.observableArray()
+var ProfileVM = function (data) {
+	var self = this;
+	self.userId = ko.observable(data.Id),
+		self.firstName = ko.observable(data.FirstName),
+		self.lastName = ko.observable(data.LastName),
+		self.recipes = ko.observableArray(data.Recipes),
+		self.groups = ko.observableArray(data.RecipeGroups),
+		self.fullName = ko.computed(function() {
+			return self.firstName() + " " + self.lastName();
+		}, self);
 };
 	
 getUserInfo= function () {
@@ -23,13 +27,7 @@ getUserInfo= function () {
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (results) {
-				//self.User(results);
-				ProfileVM.userId = results.Id;
-				ProfileVM.firstName = results.FirstName;
-				ProfileVM.lastName = results.LastName;
-				ProfileVM.groups = results.RecipeGroups;
-				ProfileVM.recipes = results.Recipes;
-				ko.applyBindings(ProfileVM);
+				ko.applyBindings(new ProfileVM(results));
 			},
 			error: function (err) {
 				//alert(err.status + " - " + err.statusText);

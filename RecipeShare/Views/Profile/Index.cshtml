@@ -6,24 +6,8 @@
 @Scripts.Render("~/KOScripts/Profile.js")
 @*<script src="~/Controllers/User.js"></script>*@
 <body>
-	<input type="button" value="test" />
-	<div id="all">
-
-		<div id="calc">
-
-			<p>Id: <strong data-bind="text: userId"></strong></p>
-			<p>First name: <strong data-bind="text: firstName"></strong></p>
-			<p>Last name: <strong data-bind="text: lastName"></strong>
-			</p>
-
-			@Html.ActionLink("Add Recipe","AddRecipe","Recipe")
-
-
-		</div>
-		<div id="info">
-			<!-- outputs will be here -->
-		</div>
-	</div>
+<h1>Profile for <span data-bind="text:fullName"></span></h1>
+	<a class ="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
 </body>
 
 

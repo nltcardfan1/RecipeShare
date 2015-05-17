@@ -9,6 +9,12 @@ var recipe = function () {
 	self.cookTime = ko.observable();
 	self.RecipeCategory = ko.observable();
 }
+
+var ingredient = function(food,amount) {
+	self.food = ko.observable(food);
+	self.amount = ko.observable(amount);
+	return self;
+}
 var recipeVm = function() {
 	var self = this;
 	self.name = ko.observable();
@@ -17,6 +23,11 @@ var recipeVm = function() {
 	self.serves = ko.observable();
 	self.prepTime = ko.observable();
 	self.cookTime = ko.observable();
+	self.amount = ko.observable();
+	self.food = ko.observable();
+	self.ingredients = ko.observableArray();
+		
+	
 	self.getFoodGroups = function() {
 		$.ajax({
 			type: "POST",
@@ -37,29 +48,34 @@ var recipeVm = function() {
 		});
 	}
 
-		self.getRecipeCategories = function() {
-			$.ajax({
-				type: "POST",
-				url: '/Recipe/GetRecipeCategories',
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function(data) {
+	self.getRecipeCategories = function() {
+		$.ajax({
+			type: "POST",
+			url: '/Recipe/GetRecipeCategories',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function(data) {
 
-					$.each(data, function(index, value) {
-						self.recipeCategories.push(value);
-					});
+				$.each(data, function(index, value) {
+					self.recipeCategories.push(value);
+				});
 
-				},
+			},
 
-				error: function(err) {
-					//alert(err.status + " - " + err.statusText);
-				}
-			});
-		}
-		self.foodGroupId = ko.observable();
-		self.getFoodGroups();
-		self.getRecipeCategories();
+			error: function(err) {
+				//alert(err.status + " - " + err.statusText);
+			}
+		});
 	}
+	self.addIngredient = function () {
+		ingredient = new ingredient(self.food, self.amount);
+		console.log(ingredient);
+		self.ingredients.push(ingredient);
+	}
+	self.foodGroupId = ko.observable();
+	self.getFoodGroups();
+	self.getRecipeCategories();
+}
 
 
 

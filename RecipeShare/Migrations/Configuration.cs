@@ -57,7 +57,10 @@ namespace RecipeShare.Migrations
 				new FoodModel.Food {Id = 6, FoodGroupId = 6, Name = "Red Pepper"},
 				new FoodModel.Food {Id = 7, FoodGroupId = 7, Name = "Sugar"}
 				);
-
+			context.RecipeCategories.AddOrUpdate(
+				x => x.Id,
+				new RecipeModel.RecipeCategory {Id = 1, Category = "American"}
+				);
         }
     }
 }

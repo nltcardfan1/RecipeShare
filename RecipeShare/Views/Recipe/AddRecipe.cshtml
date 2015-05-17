@@ -6,6 +6,25 @@
 <h2>AddRecipe</h2>
 
 <body>
-
-<input id ="foodSearch" type="text" class="form-control"/>
+	<h3>Editing Recipe <strong data-bind="text:name"></strong>
+	</h3>
+	<div class="form-group">
+		<label>Name:</label>
+		<input type="text" class="form-control" data-bind="textInput: name"/>
+	</div>
+	<div class="form-group">
+		<label>Category:</label>
+		<select class="form-control" data-bind = "options: recipeCategories, optionsText: 'recipeCategory'"></select>
+	</div>
+	<div class="form-group">
+		<label>Serves:</label>
+		<input type="text" class="form-control" data-bind="textInput: serves"/>
+	</div>
+	<div class="form-group">
+		<label>Serves:</label>
+		<input type="text" class="form-control" data-bind="textInput: serves" />
+	</div>
+	
+	<input id="foodSearch" type="text" class="form-control"/>
+	<select class = "form-control" data-bind="options: foodGroups, optionsText: 'foodGroup', optionsValue: foodGroupId"></select>
 </body>

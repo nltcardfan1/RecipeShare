@@ -10,14 +10,14 @@
 
 var ProfileVM = function (data) {
 	var self = this;
-	self.userId = ko.observable(data.Id),
-		self.firstName = ko.observable(data.FirstName),
-		self.lastName = ko.observable(data.LastName),
-		self.recipes = ko.observableArray(data.Recipes),
-		self.groups = ko.observableArray(data.RecipeGroups),
-		self.fullName = ko.computed(function() {
-			return self.firstName() + " " + self.lastName();
-		}, self);
+	self.userId = ko.observable(data.Id);
+	self.firstName = ko.observable(data.FirstName);
+	self.lastName = ko.observable(data.LastName);
+	self.recipes = ko.observableArray(data.Recipes);
+	self.groups = ko.observableArray(data.RecipeGroups);
+	self.fullName = ko.computed(function() {
+		return self.firstName() + " " + self.lastName();
+	}, self);
 };
 	
 getUserInfo= function () {

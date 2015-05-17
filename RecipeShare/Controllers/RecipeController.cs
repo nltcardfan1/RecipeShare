@@ -27,5 +27,27 @@ namespace RecipeShare.Controllers
 		    }).ToList();
 		    return Json(stuffs, JsonRequestBehavior.AllowGet);
 	    }
+
+		public JsonResult GetFoodGroups()
+		{
+			var dbContext = new RecipeShareDbContext();
+			var foodGroups = dbContext.FoodGroups.Select(x => new
+			{
+				id = x.Id,
+				foodGroup = x.Name,
+			}).ToList();
+			return Json(foodGroups,JsonRequestBehavior.AllowGet);
+		}
+
+		public JsonResult GetRecipeCategories()
+		{
+			var dbContext = new RecipeShareDbContext();
+			var recipeGroups = dbContext.RecipeCategories.Select(x => new
+			{
+				id = x.Id,
+				recipeCategory = x.Category,
+			}).ToList();
+			return Json(recipeGroups,JsonRequestBehavior.AllowGet);
+		}
     }
 }

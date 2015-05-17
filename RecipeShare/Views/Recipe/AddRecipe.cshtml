@@ -33,29 +33,50 @@
 		</div>
 	</div>
 	<br/>
-	<table>
+
+	<div class="col-md-12">
+		<div class="well">
+			<div class="form-inline">
+				<label>Food:</label>
+				<input id="foodSearch" type="text" class="form-control" data-bind="textInput:food"/>
+				<label>Amount:</label>
+				<input class="form-control" type="text" data-bind="textInput:amount"/>
+				<input type="button" class="btn btn-green" value="Add" data-bind="click:addIngredient" />
+			</div>
+		</div>
+	</div>
+
+
+	<div class="col-md-12">
+		<table>
+			<tbody data-bind="foreach: ingredients">
+				<tr>
+					<td data-bind="text:formated"></td>
+					<td>
+						<a href="#" class="btn btn-red" data-bind="click:$parent.removeIngredient">Remove</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		@*<ul class="list-group" data-bind="foreach: ingredients">
+			<li data-bind="text:formated">
+				
+			</li>
+		</ul>*@
+	</div>
+	
+	@*<table>
 		<tbody data-bind="foreach: ingredients">
 			<tr>
 				<td>
-					<input data-bind='value:food' />
+					<strong class data-bind='value:food'></strong>
 				</td>
 				<td>
-					<strong data-bind='text:amount'></strong>
+					<strong class =" form-control" data-bind='text:amount'></strong>
 				</td>
 			</tr>
 		</tbody>
-		
-	</table>
-	<div class="col-md-12">
-		<div class="form-group">
-			<label>Food:</label>
-			<input id="foodSearch" type="text" class="form-control" data-bind="textInput:food" />
-		</div>
-		<div class="form-group">
-			<label>Amount:</label>
-			<input class="form-control" type="text" data-bind="textInput:amount" />
-		</div>
-		<input type="button" class="btn btn-green" value ="Add" data-bind="click:addIngredient"/>
-	</div>
+
+	</table>*@
 	<div class="clearfix"></div>
 </body>

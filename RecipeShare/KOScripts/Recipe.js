@@ -14,6 +14,9 @@ var Ingredient = function(food, amount) {
 	var self = this;
 	self.food = ko.observable(food);
 	self.amount = ko.observable(amount);
+	self.formated = ko.computed(function() {
+		return self.amount() + " " + self.food();
+	});
 }
 
 
@@ -27,19 +30,8 @@ var recipeVm = function() {
 	self.cookTime = ko.observable();
 	self.food = ko.observable();
 	self.amount = ko.observable();
-	self.ingredient = ko.observable(function(food, amount) {
-		this.food = ko.observable(food);
-		this.amount = ko.observable(amount);
-	});
-	self.ingredients =  ko.observableArray(
-	//	ko.utils.arrayMap(self.ingredient, function (ingredient) {
-	//		return ko.observable(ingredient);
-	//	})
-	);
+	self.ingredients = ko.observableArray();
 
-	//self.currentIngredient = ko.observable(ko.utils.Map(Ingredient, function(ingredient) {
-	//	return ko.observable(ingredient);
-	//}));
 	self.getFoodGroups = function() {
 		$.ajax({
 			type: "POST",
@@ -80,11 +72,14 @@ var recipeVm = function() {
 		});
 	}
 	self.addIngredient = function() {
-
+		
 		self.ingredients.push(new Ingredient(self.food(), self.amount()));
 		self.food("");
 		self.amount("");
 	};
+	self.removeIngredient = function () {
+		self.ingredients.remove(this);
+	}
 	self.foodGroupId = ko.observable();
 	self.getRecipeCategories();
 }

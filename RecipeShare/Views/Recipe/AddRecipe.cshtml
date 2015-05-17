@@ -41,29 +41,27 @@
 				<input id="foodSearch" type="text" class="form-control" data-bind="textInput:food"/>
 				<label>Amount:</label>
 				<input class="form-control" type="text" data-bind="textInput:amount"/>
-				<input type="button" class="btn btn-green" value="Add" data-bind="click:addIngredient" />
+				<a href="#" class="btn btn-green" data-bind="click:addIngredient">
+					<i class="fa fa-lg fa-plus"></i>
+				</a>
+				@*<input type="button" class="btn btn-green" data-bind="click:addIngredient" />*@
 			</div>
 		</div>
 	</div>
+	<div class="col-md-6">
+		<ul class="list-group" data-bind="foreach: ingredients">
+			<li class=" list-group-item" data-bind="click:$parent.removeIngredient">
+				<h4 class ="" data-bind="text:formated"></h4>
+				@*<a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
+			</li>
 
-
-	<div class="col-md-12">
-		<table>
-			<tbody data-bind="foreach: ingredients">
-				<tr>
-					<td data-bind="text:formated"></td>
-					<td>
-						<a href="#" class="btn btn-red" data-bind="click:$parent.removeIngredient">Remove</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		</ul>
+	</div>
 		@*<ul class="list-group" data-bind="foreach: ingredients">
 			<li data-bind="text:formated">
 				
 			</li>
 		</ul>*@
-	</div>
 	
 	@*<table>
 		<tbody data-bind="foreach: ingredients">

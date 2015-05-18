@@ -62,7 +62,7 @@
 		<div class="well">
 			<div class="form-inline">
 				<label>Instruction:</label>
-				<input type="text" class="form-control" data-bind="textInput:step"/>
+				<textarea type="text" class="form-control" data-bind="textInput:step"></textarea>
 				<a href="#" class="btn btn-green" data-bind="click:addStep">
 					<i class="fa fa-lg fa-plus"></i>
 				</a>
@@ -73,8 +73,9 @@
 	<div class="col-md-6">
 		<ul class="list-group" data-bind="foreach: steps">
 			<li class=" list-group-item" data-bind="click:$parent.removeStep">
-				<span data-bind="text:$index">.</span><span class="" data-bind="text:narrative"></span>
-				@*<a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
+				<p>
+					<span data-bind="text:($index()+1)"></span><span>. </span><p class="" data-bind="text:narrative"></p>
+				</p>@*<a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
 			</li>
 
 		</ul>

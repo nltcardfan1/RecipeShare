@@ -84,6 +84,9 @@ var recipeVm = function() {
 	self.addStep = function() {
 		self.steps.push(new Step(self.step()));
 		self.step("");
+	};
+	self.removeStep = function () {
+		self.steps.remove(this);
 	}
 	self.foodGroupId = ko.observable();
 	self.getRecipeCategories();

@@ -1,14 +1,7 @@
 ﻿/// <reference path="~/Scripts/jquery-2.1.3.js" />
 /// <reference path="~/Scripts/knockout-3.3.0.js" />
 
-var recipe = function () {
-	var self = this;
-	self.name = ko.observable();
-	self.serves = ko.observable();
-	self.prepTime = ko.observable();
-	self.cookTime = ko.observable();
-	self.RecipeCategory = ko.observable();
-}
+
 
 var Ingredient = function(food, amount) {
 	var self = this;
@@ -17,6 +10,11 @@ var Ingredient = function(food, amount) {
 	self.formated = ko.computed(function() {
 		return self.amount() + " " + self.food();
 	});
+}
+
+var Step = function(narrative) {
+	var self = this;
+	self.narrative = ko.observable(narrative);
 }
 
 
@@ -31,6 +29,9 @@ var recipeVm = function() {
 	self.food = ko.observable();
 	self.amount = ko.observable();
 	self.ingredients = ko.observableArray();
+	self.step = ko.observable();
+	self.steps = ko.observableArray();
+	
 
 	self.getFoodGroups = function() {
 		$.ajax({
@@ -77,8 +78,12 @@ var recipeVm = function() {
 		self.food("");
 		self.amount("");
 	};
-	self.removeIngredient = function () {
+	self.removeIngredient = function() {
 		self.ingredients.remove(this);
+	};
+	self.addStep = function() {
+		self.steps.push(new Step(self.step()));
+		self.step("");
 	}
 	self.foodGroupId = ko.observable();
 	self.getRecipeCategories();

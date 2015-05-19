@@ -24,6 +24,13 @@ namespace RecipeShare
 					  "~/Scripts/respond.js",
 					  "~/Scripts/DataTables/jquery.dataTables.js",
 					  "~/Scripts/jquery-ui.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/misc").Include(
+					 "~/Scripts/toastr.js"));
+
+			bundles.Add(new ScriptBundle("~/bundles/KO").Include(
+				"~/Scripts/knockout-3.3.0.js",
+				"~/Scripts/knockout.validation.js"));
 			#if DEBUG
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
@@ -31,7 +38,8 @@ namespace RecipeShare
 					  "~/Content/style.css",
 					  "~/Content/font-awesome.css",
 					  "~/Content/DataTables/css/jquery.dataTables.css",
-					  "~/Content/jquery-ui.css"));
+					  "~/Content/jquery-ui.css",
+					  "~/Content/toastr.css"));
 			#else 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.min.css",
@@ -39,7 +47,8 @@ namespace RecipeShare
 					  "~/Content/style.css",
 					  "~/Content/font-awesome.min.css",
 					  "~/Content/DataTables/css/jquery.dataTables.min.css",
-					  "~/Content/jquery-ui.css"));
+					  "~/Content/jquery-ui.css",
+					  "~/Content/toastr.min.cdd"));
 #endif
 		}
 	}

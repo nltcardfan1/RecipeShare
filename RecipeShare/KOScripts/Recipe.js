@@ -1,6 +1,7 @@
 ﻿/// <reference path="~/Scripts/jquery-2.1.3.js" />
 /// <reference path="~/Scripts/knockout-3.3.0.js" />
-
+/// <reference path="~/Scripts/toastr.js" />
+/// <reference path="~/Scripts/knockout.validation.js" />
 
 
 var Ingredient = function(food, amount) {
@@ -18,14 +19,15 @@ var Step = function(narrative) {
 }
 
 
+
 var recipeVm = function() {
 	var self = this;
-	self.name = ko.observable();
+	self.name = ko.observable().extend({required:true});
 	self.foodGroups = ko.observableArray();
 	self.recipeCategories = ko.observableArray();
-	self.serves = ko.observable();
-	self.prepTime = ko.observable();
-	self.cookTime = ko.observable();
+	self.serves = ko.observable().extend({ required: true});
+	self.prepTime = ko.observable().extend({ number: true});
+	self.cookTime = ko.observable().extend({ number: true });
 	self.food = ko.observable();
 	self.amount = ko.observable();
 	self.ingredients = ko.observableArray();
@@ -88,7 +90,9 @@ var recipeVm = function() {
 	self.removeStep = function () {
 		self.steps.remove(this);
 	}
-	self.foodGroupId = ko.observable();
+	self.saveRecipe = function() {
+		console.log(self);
+	}
 	self.getRecipeCategories();
 }
 

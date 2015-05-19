@@ -2,6 +2,7 @@
 /// <reference path="~/Scripts/knockout-3.3.0.js" />
 /// <reference path="~/Scripts/toastr.js" />
 /// <reference path="~/Scripts/knockout.validation.js" />
+/// <reference path="~/Scripts/setup.js" />
 
 
 var Ingredient = function(food, amount) {
@@ -75,23 +76,30 @@ var recipeVm = function() {
 		});
 	}
 	self.addIngredient = function() {
-		
-		self.ingredients.push(new Ingredient(self.food(), self.amount()));
-		self.food("");
-		self.amount("");
+		if (self.food() && self.amount()) {
+			self.ingredients.push(new Ingredient(self.food(), self.amount()));
+			self.food("");
+			self.amount("");
+		} else {
+			toastrError();
+		}
 	};
 	self.removeIngredient = function() {
 		self.ingredients.remove(this);
 	};
-	self.addStep = function() {
-		self.steps.push(new Step(self.step()));
-		self.step("");
+	self.addStep = function () {
+		if (self.step()) {
+			self.steps.push(new Step(self.step()));
+			self.step("");
+		} else {
+			toastrError();
+		}
 	};
 	self.removeStep = function () {
 		self.steps.remove(this);
 	}
 	self.saveRecipe = function() {
-		console.log(self);
+		console.log(ko.toJSON(self));
 	}
 	self.getRecipeCategories();
 }

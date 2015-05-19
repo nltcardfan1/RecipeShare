@@ -26,7 +26,8 @@ namespace RecipeShare
 					  "~/Scripts/jquery-ui.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/misc").Include(
-					 "~/Scripts/toastr.js"));
+					 "~/Scripts/toastr.js",
+					 "~/Scripts/setup.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/KO").Include(
 				"~/Scripts/knockout-3.3.0.js",

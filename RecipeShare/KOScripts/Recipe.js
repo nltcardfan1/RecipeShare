@@ -3,7 +3,13 @@
 /// <reference path="~/Scripts/toastr.js" />
 /// <reference path="~/Scripts/knockout.validation.js" />
 /// <reference path="~/Scripts/setup.js" />
-
+ko.validation.init({
+	registerExtenders: true,
+	messagesOnModified: true,
+	insertMessages: true,
+	parseInputAttributes: true,
+	messageTemplate: null
+}, true);
 
 var Ingredient = function(food, amount) {
 	var self = this;
@@ -34,7 +40,7 @@ var recipeVm = function() {
 	self.ingredients = ko.observableArray();
 	self.step = ko.observable();
 	self.steps = ko.observableArray();
-	
+	self.errors = ko.validation.group(self);
 
 	self.getFoodGroups = function() {
 		$.ajax({
@@ -98,8 +104,12 @@ var recipeVm = function() {
 	self.removeStep = function () {
 		self.steps.remove(this);
 	}
-	self.saveRecipe = function() {
-		console.log(ko.toJSON(self));
+	self.saveRecipe = function () {
+		if (self.errors().length === 0) {
+			console.log(ko.toJSON(self));
+		} else {
+			toastrError();
+		}
 	}
 	self.getRecipeCategories();
 }

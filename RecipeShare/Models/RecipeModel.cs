@@ -37,11 +37,9 @@ namespace RecipeShare.Models
 
 			public int RecipeId { get; set; }
 
-			public int FoodId { get; set; }
+			public string Food { get; set; }
 
 			public string Amount { get; set; }
-
-			public virtual FoodModel.Food Food { get; set; }
 
 		}
 

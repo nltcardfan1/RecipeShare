@@ -27,9 +27,9 @@ namespace RecipeShare.Models
 
 		public DbSet<RecipeModel.Ingredient> Ingredients { get; set; }
 
-		public DbSet<FoodModel.Food> Foods { get; set; }
+		//public DbSet<FoodModel.Food> Foods { get; set; }
 
-		public DbSet<FoodModel.FoodGroup> FoodGroups { get; set; }
+		//public DbSet<FoodModel.FoodGroup> FoodGroups { get; set; }
 
 		public DbSet<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
 

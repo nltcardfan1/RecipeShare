@@ -42,25 +42,25 @@ var recipeVm = function() {
 	self.steps = ko.observableArray();
 	self.errors = ko.validation.group(self);
 
-	self.getFoodGroups = function() {
-		$.ajax({
-			type: "POST",
-			url: '/Recipe/GetFoodGroups',
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function(data) {
+	//self.getFoodGroups = function() {
+	//	$.ajax({
+	//		type: "POST",
+	//		url: '/Recipe/GetFoodGroups',
+	//		contentType: "application/json; charset=utf-8",
+	//		dataType: "json",
+	//		success: function(data) {
 
-				$.each(data, function(index, value) {
-					self.foodGroups.push(value);
-				});
+	//			$.each(data, function(index, value) {
+	//				self.foodGroups.push(value);
+	//			});
 
-			},
+	//		},
 
-			error: function(err) {
-				//alert(err.status + " - " + err.statusText);
-			}
-		});
-	}
+	//		error: function(err) {
+	//			//alert(err.status + " - " + err.statusText);
+	//		}
+	//	});
+	//}
 
 	self.getRecipeCategories = function() {
 		$.ajax({
@@ -105,11 +105,29 @@ var recipeVm = function() {
 		self.steps.remove(this);
 	}
 	self.saveRecipe = function () {
-		if (self.errors().length === 0) {
-			console.log(ko.toJSON(self));
-		} else {
-			toastrError();
-		}
+		console.log(ko.toJSON(self));
+		//if (self.errors().length === 0) {
+		$.ajax({
+			type: "POST",
+			url: '/Recipe/SaveRecipe',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: ko.toJSON(self),
+			success: function (data) {
+
+				$.each(data, function (index, value) {
+					self.foodGroups.push(value);
+				});
+
+			},
+
+			error: function (err) {
+				//alert(err.status + " - " + err.statusText);
+			}
+		});
+		//} else {
+		//	toastrError();
+		//}
 	}
 	self.getRecipeCategories();
 }
@@ -126,32 +144,32 @@ var recipeVm = function() {
 
 $(document).ready(function () {
 	ko.applyBindings(new recipeVm());
-	$("#foodSearch").autocomplete({
-		delay: 500,
-		minLength: 3,
-		source: function(request, response) {
-			$.ajax({
-				dataType: "json",
-				data: { "search": request.term },
-				url: '/Recipe/GetFoods',
-				success: function (data) {
-					var items = $.map(data, function (item) {
-						return {
-							label: item.name,
-							value: item.id
-						};
-					});
-					response(items);
-				}
+	//$("#foodSearch").autocomplete({
+	//	delay: 500,
+	//	minLength: 3,
+	//	source: function(request, response) {
+	//		$.ajax({
+	//			dataType: "json",
+	//			data: { "search": request.term },
+	//			url: '/Recipe/GetFoods',
+	//			success: function (data) {
+	//				var items = $.map(data, function (item) {
+	//					return {
+	//						label: item.name,
+	//						value: item.id
+	//					};
+	//				});
+	//				response(items);
+	//			}
 				
-			});
-		},
-		select: function (event, ui) {
-			$("#foodSearch").val(ui.item.label);
-			//cityID = ui.item.id;
-			return false;
-		}
-	});
+	//		});
+	//	},
+	//	select: function (event, ui) {
+	//		$("#foodSearch").val(ui.item.label);
+	//		//cityID = ui.item.id;
+	//		return false;
+	//	}
+	//});
 
 //	foodVm.getFoods();
 });

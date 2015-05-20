@@ -9,7 +9,7 @@ namespace RecipeShare.Models
 	{
 		public string  Name { get; set; }
 
-		public int Serves { get; set; }
+		public string Serves { get; set; }
 
 		public int PrepTime	{ get; set; }
 

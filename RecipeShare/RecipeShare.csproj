@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201505201919284_remove food stuff tables.Designer.cs">
       <DependentUpon>201505201919284_remove food stuff tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505202205002_update serves to be not int.cs" />
+    <Compile Include="Migrations\201505202205002_update serves to be not int.Designer.cs">
+      <DependentUpon>201505202205002_update serves to be not int.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -456,6 +460,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505201919284_remove food stuff tables.resx">
       <DependentUpon>201505201919284_remove food stuff tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505202205002_update serves to be not int.resx">
+      <DependentUpon>201505202205002_update serves to be not int.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

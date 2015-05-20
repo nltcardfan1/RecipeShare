@@ -51,7 +51,7 @@ namespace RecipeShare.Models
 
 			public RecipeCategory RecipeCategory { get; set; }
 
-			public int? Serves { get; set; }
+			public string Serves { get; set; }
 
 			public int? PrepTimeMinutes { get; set; }
 
@@ -64,7 +64,13 @@ namespace RecipeShare.Models
 			public virtual ICollection<GroupModel.RecipeGroup> RecipeGroups  { get; set; }
 
 			public virtual AspNetUser CreatedByUser { get; set; }
+
+			public virtual ICollection<Ingredient> Ingredients { get; set; }  
 			
 		}
+	}
+
+	class RecipeModelImpl : RecipeModel
+	{
 	}
 }

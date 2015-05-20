@@ -39,7 +39,7 @@ var recipeVm = function() {
 	self.amount = ko.observable();
 	self.ingredients = ko.observableArray();
 	self.step = ko.observable();
-	self.steps = ko.observableArray();
+	self.instructions = ko.observableArray();
 	self.errors = ko.validation.group(self);
 
 	//self.getFoodGroups = function() {
@@ -95,14 +95,14 @@ var recipeVm = function() {
 	};
 	self.addStep = function () {
 		if (self.step()) {
-			self.steps.push(new Step(self.step()));
+			self.instructions.push(new Step(self.step()));
 			self.step("");
 		} else {
 			toastrError();
 		}
 	};
 	self.removeStep = function () {
-		self.steps.remove(this);
+		self.instructions.remove(this);
 	}
 	self.saveRecipe = function () {
 		console.log(ko.toJSON(self));

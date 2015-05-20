@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.EnterpriseServices.Internal;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using RecipeShare.Models;
 
 namespace RecipeShare.Controllers
@@ -55,7 +57,42 @@ namespace RecipeShare.Controllers
 	    [HttpPost]
 	    public ActionResult SaveRecipe(RecipeViewModel data)
 	    {
-		    
+		    var dbContext = new RecipeShareDbContext();
+			var recipe = new RecipeModel.Recipe()
+			{
+				Name = data.Name,
+				AspNetUserId = Convert.ToInt32(User.Identity.GetUserId()),
+				CookTimeMinutes = data.CookTime,
+				PrepTimeMinutes = data.PrepTime,
+				Serves = data.Serves
+			};
+
+			recipe.Ingredients = new List<RecipeModel.Ingredient>();
+		    foreach (var ingredient in data.Ingredients)
+		    {
+			    recipe.Ingredients.Add(new RecipeModel.Ingredient()
+			    {
+				    Amount = ingredient.Amount,
+					Food = ingredient.Food,
+			    });
+		    }
+
+			recipe.Instructions = new List<RecipeModel.Instruction>();
+			for(int i = 1; i <= data.Instructions.Count; i++ )
+			//foreach(var instruction in RecipeModel.Instruction.Select((value,i) => new {i, value}))
+			{
+
+				recipe.Instructions.Add(new RecipeModel.Instruction()
+				{
+					InstructionNumber = i,
+					Narrative = data.Instructions[i-1].Narrative, //Dear lord.... help me
+					
+				});
+			}
+
+
+			dbContext.Recipes.Add(recipe);
+		    dbContext.SaveChanges();
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 	    }
     }

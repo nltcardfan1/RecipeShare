@@ -12,26 +12,29 @@
 	<h3>
 		Editing Group <strong data-bind="text:name"></strong>
 	</h3>
-	<div>
 		<div class=" col-md-4">
 			<div class="form-group">
 				<label>Name:</label>
 				<input type="text" class="form-control" data-bind="textInput: name"/>
 			</div>
 		</div>
-
-		<form data-bind="submit:addMember">
-			Add item: <input type="text" data-bind='value:memberToAdd, valueUpdate: "afterkeydown"'/>
-			<button type="submit" data-bind="enable: memberToAdd().length > 0">Add</button>
-		</form>
+	<div class=" col-md-4">
+			<div class="input-group">
+				<input type="text" class="form-control" data-bind='value:memberToAdd, valueUpdate: "afterkeydown"'>
+				<span class="input-group-btn">
+					<button class="btn btn-green" type="button" data-bind="enable: memberToAdd().length > 0, click:addMember">Add</button>
+				</span>
+			</div><!-- /input-group -->
+		@*Add item: <input type="text" class="form-control " data-bind='value:memberToAdd, valueUpdate: "afterkeydown"'/>
+		<a href="#" class=" btn btn-green" type="submit" data-bind="enable: memberToAdd().length > 0, click:addMember">Add</a>*@
 
 		<p>Your values:</p>
-		<select multiple="multiple" height="5" data-bind="options:members, selectedOptions:selectedItems"> </select>
+		<select class="form-control" multiple="multiple" height="5" data-bind="options:userEmails, selectedOptions:selectedItems"></select>
 
-		@*<div>
-			<button data-bind="click: removeSelected, enable: selectedItems().length > 0">Remove</button>
-			<button data-bind="click: sortItems, enable: allItems().length > 1">Sort</button>
-		</div>*@
+		<div>
+			<a href="#" class="btn btn-red" data-bind="click: removeSelected, enable: selectedItems().length > 0">Remove</a>
+		</div>
+		<a href="#" class = "btn btn-green"data-bind="click:saveGroup">Save</a>
 	</div>
 	<div class="clearfix"></div>
 </body>

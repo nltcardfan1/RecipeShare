@@ -210,6 +210,7 @@
     <Compile Include="Migrations\201505202205002_update serves to be not int.Designer.cs">
       <DependentUpon>201505202205002_update serves to be not int.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\GroupViewModel.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />

@@ -100,7 +100,7 @@ var recipeVm = function() {
 	}
 	self.saveRecipe = function () {
 		console.log(ko.toJSON(self));
-		//if (self.errors().length === 0) {
+		if (self.errors().length === 0) {
 		$.ajax({
 			type: "POST",
 			url: '/Recipe/SaveRecipe',
@@ -119,9 +119,9 @@ var recipeVm = function() {
 				//alert(err.status + " - " + err.statusText);
 			}
 		});
-		//} else {
-		//	toastrError();
-		//}
+		} else {
+			toastrError();
+		}
 	}
 	self.getRecipeCategories();
 }

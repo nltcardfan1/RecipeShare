@@ -31,7 +31,8 @@ namespace RecipeShare
 
 			bundles.Add(new ScriptBundle("~/bundles/KO").Include(
 				"~/Scripts/knockout-3.3.0.js",
-				"~/Scripts/knockout.validation.js"));
+				"~/Scripts/knockout.validation.js",
+				"~/Scripts/knockout.mapping-latest.js"));
 			#if DEBUG
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",

@@ -3,13 +3,7 @@
 /// <reference path="~/Scripts/toastr.js" />
 /// <reference path="~/Scripts/knockout.validation.js" />
 /// <reference path="~/Scripts/setup.js" />
-ko.validation.init({
-	registerExtenders: true,
-	messagesOnModified: true,
-	insertMessages: true,
-	parseInputAttributes: true,
-	messageTemplate: null
-}, true);
+
 
 var Ingredient = function(food, amount) {
 	var self = this;

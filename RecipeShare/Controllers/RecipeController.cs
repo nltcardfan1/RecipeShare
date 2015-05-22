@@ -58,16 +58,16 @@ namespace RecipeShare.Controllers
 	    public ActionResult SaveRecipe(RecipeViewModel data)
 	    {
 		    var dbContext = new RecipeShareDbContext();
-			var recipe = new RecipeModel.Recipe()
-			{
-				Name = data.Name,
-				AspNetUserId = Convert.ToInt32(User.Identity.GetUserId()),
-				CookTimeMinutes = data.CookTime,
-				PrepTimeMinutes = data.PrepTime,
-				Serves = data.Serves
-			};
+		    var recipe = new RecipeModel.Recipe
+		    {
+			    Name = data.Name,
+			    AspNetUserId = Convert.ToInt32(User.Identity.GetUserId()),
+			    CookTimeMinutes = data.CookTime,
+			    PrepTimeMinutes = data.PrepTime,
+			    Serves = data.Serves,
+			    Ingredients = new List<RecipeModel.Ingredient>()
+		    };
 
-			recipe.Ingredients = new List<RecipeModel.Ingredient>();
 		    foreach (var ingredient in data.Ingredients)
 		    {
 			    recipe.Ingredients.Add(new RecipeModel.Ingredient()

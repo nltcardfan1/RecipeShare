@@ -7,13 +7,13 @@ namespace RecipeShare.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class intid : IMigrationMetadata
+    public sealed partial class fixreversekeys : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(intid));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fixreversekeys));
         
         string IMigrationMetadata.Id
         {
-            get { return "201505100132103_int id"; }
+            get { return "201505220001229_fix reverse keys"; }
         }
         
         string IMigrationMetadata.Source

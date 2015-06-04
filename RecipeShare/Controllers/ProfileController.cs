@@ -24,9 +24,9 @@ namespace RecipeShare.Controllers
 					netuser.Id, 
 					netuser.Email,
 					netuser.FirstName,
-					netuser.LastName,
-					netuser.RecipeGroups,
-					netuser.Recipes
+					netuser.LastName
+					//netuser.RecipeGroups,
+					//netuser.Recipes
 
 				}).First();
 			var userjson = Json(user);
@@ -39,5 +39,23 @@ namespace RecipeShare.Controllers
 			return View();
 		}
 
+		[HttpPost]
+		public JsonResult GetRecipesForUser()
+		{
+			var dbContext = new RecipeShareDbContext();
+			int id = Convert.ToInt32(User.Identity.GetUserId());
+			var recipes = dbContext.Recipes.Where(x => x.AspNetUserId == id)
+				.Select(recipe => new
+				{
+					recipe.Name,
+					recipe.RecipeCategory,
+					recipe.PrepTimeMinutes,
+					recipe.CookTimeMinutes,
+					recipe.Id,
+					recipe.Serves
+
+				}).ToList();
+			return Json(recipes);
+		}
 	}
 }

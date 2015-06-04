@@ -95,5 +95,11 @@ namespace RecipeShare.Controllers
 		    dbContext.SaveChanges();
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 	    }
+
+		//[HttpPost]
+		//public ActionResult UpdateRecipe(RecipeViewModel data)
+		//{
+
+		//}
     }
 }

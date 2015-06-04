@@ -13,14 +13,36 @@ var ProfileVM = function (data) {
 	self.userId = ko.observable(data.Id);
 	self.firstName = ko.observable(data.FirstName);
 	self.lastName = ko.observable(data.LastName);
-	self.recipes = ko.observableArray(data.Recipes);
-	self.groups = ko.observableArray(data.RecipeGroups);
+	self.recipes = ko.observableArray();
+	self.groups = ko.observableArray();
 	self.fullName = ko.computed(function() {
 		return self.firstName() + " " + self.lastName();
 	}, self);
+	self.getRecipesForUser = function() {
+		$.ajax({
+			type: "POST",
+			url: '/Profile/getRecipesForUser',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function(data) {
+
+				$.each(data, function(index, value) {
+					var recipe = new recipeVm(data);
+
+					self.recipes.push(value);
+				});
+
+			},
+
+			error: function(err) {
+				//alert(err.status + " - " + err.statusText);
+			}
+		});
+	}
+	self.getRecipesForUser();
 };
 	
-getUserInfo= function () {
+var getUserInfo = function () {
 		$.ajax({
 			type: "POST",
 			url: '/Profile/GetProfileForUser',

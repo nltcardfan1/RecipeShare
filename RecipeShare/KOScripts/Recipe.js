@@ -21,14 +21,15 @@ var Step = function(narrative) {
 
 
 
-var recipeVm = function() {
+var recipeVm = function(data) {
 	var self = this;
-	self.name = ko.observable().extend({required:true});
+	self.recipeId = ko.observable(data.Id);
+	self.name = ko.observable(data.name).extend({required:true});
 	self.foodGroups = ko.observableArray();
 	self.recipeCategories = ko.observableArray();
-	self.serves = ko.observable().extend({ required: true});
-	self.prepTime = ko.observable().extend({ number: true});
-	self.cookTime = ko.observable().extend({ number: true });
+	self.serves = ko.observable(data.serves).extend({ required: true});
+	self.prepTime = ko.observable(data.PrepTimeMinutes).extend({ number: true });
+	self.cookTime = ko.observable(data.CookTimeMinutes).extend({ number: true });
 	self.food = ko.observable();
 	self.amount = ko.observable();
 	self.ingredients = ko.observableArray();
@@ -137,7 +138,7 @@ var recipeVm = function() {
 
 
 $(document).ready(function () {
-	ko.applyBindings(new recipeVm());
+	//ko.applyBindings(new recipeVm());
 	//$("#foodSearch").autocomplete({
 	//	delay: 500,
 	//	minLength: 3,

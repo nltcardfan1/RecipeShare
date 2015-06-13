@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using RecipeShare.Models;
@@ -20,9 +21,28 @@ namespace RecipeShare.Controllers
 			return View("AddRecipe");
         }
 
-	    public ActionResult EditRecipe(RecipeViewModel rvm)
+	    public ActionResult EditRecipe(int id)
 	    {
-		    return View("AddRecipe");
+			var dbContext = new RecipeShareDbContext();
+			var recipe = dbContext.Recipes.Where(x => x.Id == id)
+				.Select(x=> new RecipeViewModel
+				{
+					Id = x.Id,
+					//AspNetUserId = x.AspNetUserId,
+					CookTime = x.CookTimeMinutes,
+					//CreatedByUser = x.CreatedByUser,
+					Ingredients = x.Ingredients.ToList(),
+					Instructions = x.Instructions.ToList(),
+					Name = x.Name,
+					PrepTime = x.PrepTimeMinutes,
+					//RecipeCategory = x.RecipeCategory,
+					//RecipeGroups = x.RecipeGroups,
+					Serves = x.Serves
+				}).First();
+			
+			//var serializer = new JavaScriptSerializer();
+			//recipe.JsonData = serializer.Serialize(recipe);
+		    return View("AddRecipe",recipe);
 	    }
 		//public JsonResult GetFoods(string search)
 		//{

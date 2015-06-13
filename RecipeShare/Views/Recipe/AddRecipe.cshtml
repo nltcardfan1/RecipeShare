@@ -1,10 +1,11 @@
 ﻿
 @{
     ViewBag.Title = "AddRecipe";
+	ViewBag.info = Model;
 }
 <script src="~/KOScripts/Recipe.js"></script>
 <h2>AddRecipe</h2>
-
+@Html.Raw(@Model)
 <body>
 	<h3>Editing Recipe <strong data-bind="text:name"></strong>
 	</h3>
@@ -87,7 +88,7 @@
 @section scripts{
 <script type="text/javascript">
 	$(function () {
-		ko.applyBindings(new recipeVm());
+		ko.applyBindings(new recipeVm(@Model));
 	});
 </script>
 }

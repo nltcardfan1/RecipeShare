@@ -12,12 +12,14 @@ namespace RecipeShare.Models
 
 		public string Serves { get; set; }
 
-		public int PrepTime	{ get; set; }
+		public int? PrepTime	{ get; set; }
 
-		public int CookTime { get; set; }
+		public int? CookTime { get; set; }
 
 		public List<Models.RecipeModel.Ingredient> Ingredients { get; set; }
 
 		public List<RecipeModel.Instruction> Instructions { get; set; }
+
+		public string JsonData{get;set;}
 	}
 }

@@ -41,7 +41,7 @@ var ProfileVM = function(data) {
 	}
 
 	self.addEdit = function (info) {
-		window.location.href = "/Recipe/AddRecipe?Id=" + info.Id;
+		window.location.href = "/Recipe/EditRecipe?Id=" + info.Id;
 		//$.post("/Recipe/AddRecipe?Id=" + info.Id);
 	}
 

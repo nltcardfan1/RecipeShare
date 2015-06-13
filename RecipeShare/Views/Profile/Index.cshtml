@@ -10,9 +10,25 @@
 <h1>Profile for <span data-bind="text:fullName"></span></h1>
 	<a class="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
 	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Manage Groups</a>
-	<ul class="list-group" data-bind="foreach: recipes">
-		<li data-bind="text:Name"></li>
-	</ul>
+	<table class="table" >
+		<tr>
+			<th>Name</th>
+			<th>Category</th>
+			<th>Serves</th>
+			<th>Cook Time</th>
+			<th>Prep Time</th>
+			<th></th>
+		</tr>
+		<tr data-bind="foreach: recipes">
+			<td data-bind="text:Name"></td>
+			<td data-bind="text:RecipeCategory"></td>
+			<td data-bind="text:Serves"></td>
+			<td data-bind="text:CookTimeMinutes"></td>
+			<td data-bind="text:PrepTimeMinutes"></td>
+			<td><a data-bind="click:$parent.addEdit" href="#" class="fa fa-pencil fa-lg"></a>
+			<a href="#" class="fa fa-eye fa-lg"></a></td>
+		</tr>
+	</table>
 </body>
 
 

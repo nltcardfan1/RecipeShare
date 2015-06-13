@@ -17,8 +17,13 @@ namespace RecipeShare.Controllers
         // GET: Recipe
         public ActionResult AddRecipe()
         {
-            return View();
+			return View("AddRecipe");
         }
+
+	    public ActionResult EditRecipe(RecipeViewModel rvm)
+	    {
+		    return RedirectToAction("AddRecipe", "Recipe");
+	    }
 		//public JsonResult GetFoods(string search)
 		//{
 		//	var dbContext = new RecipeShareDbContext();

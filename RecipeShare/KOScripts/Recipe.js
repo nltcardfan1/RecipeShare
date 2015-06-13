@@ -23,19 +23,26 @@ var Step = function(narrative) {
 
 var recipeVm = function(data) {
 	var self = this;
-	self.recipeId = ko.observable(data.Id);
-	self.name = ko.observable(data.name).extend({required:true});
+	self.recipeId = ko.observable();
+	self.name = ko.observable().extend({required:true});
 	self.foodGroups = ko.observableArray();
 	self.recipeCategories = ko.observableArray();
-	self.serves = ko.observable(data.serves).extend({ required: true});
-	self.prepTime = ko.observable(data.PrepTimeMinutes).extend({ number: true });
-	self.cookTime = ko.observable(data.CookTimeMinutes).extend({ number: true });
+	self.serves = ko.observable().extend({ required: true});
+	self.prepTime = ko.observable().extend({ number: true });
+	self.cookTime = ko.observable().extend({ number: true });
 	self.food = ko.observable();
 	self.amount = ko.observable();
 	self.ingredients = ko.observableArray();
 	self.step = ko.observable();
 	self.instructions = ko.observableArray();
 	self.errors = ko.validation.group(self);
+
+	if (typeof data != "undefined") {
+		self.update(data);
+	}
+
+	
+
 
 	//self.getFoodGroups = function() {
 	//	$.ajax({
@@ -135,6 +142,14 @@ var recipeVm = function(data) {
 //	}
 //}
 
+recipeVm.prototype.update = function (data) {
+	var self = this;
+	self.recipeId(data.Id || "");
+	self.name(data.name || "");
+	self.serves(data.serves || "");
+	self.prepTime(data.PrepTimeMinutes || "");
+	self.cookTime(data.CookTimeMinutes || "");
+};
 
 
 $(document).ready(function () {

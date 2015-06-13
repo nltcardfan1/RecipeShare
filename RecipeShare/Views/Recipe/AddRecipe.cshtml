@@ -83,3 +83,11 @@
 	<a href="#" class="btn btn-green" data-bind=" click:saveRecipe">save</a>
 	<div class="clearfix"></div>
 </body>
+
+@section scripts{
+<script type="text/javascript">
+	$(function () {
+		ko.applyBindings(new recipeVm());
+	});
+</script>
+}

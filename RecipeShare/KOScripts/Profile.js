@@ -8,7 +8,7 @@
 //	//self.UserName = ko.observable();
 //}
 
-var ProfileVM = function (data) {
+var ProfileVM = function(data) {
 	var self = this;
 	self.userId = ko.observable(data.Id);
 	self.firstName = ko.observable(data.FirstName);
@@ -39,7 +39,18 @@ var ProfileVM = function (data) {
 			}
 		});
 	}
-	self.getRecipesForUser();
+
+	self.addEdit = function(info) {
+		$.ajax({
+			type: "POST",
+			url: '/Recipe/EditRecipe',
+			contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(info),
+			dataType: "json"
+		});
+	}
+
+self.getRecipesForUser();
 };
 	
 var getUserInfo = function () {

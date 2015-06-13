@@ -40,19 +40,16 @@ var ProfileVM = function(data) {
 		});
 	}
 
-	self.addEdit = function(info) {
-		$.ajax({
-			type: "POST",
-			url: '/Recipe/EditRecipe',
-			contentType: "application/json; charset=utf-8",
-			data: JSON.stringify(info),
-			dataType: "json"
-		});
+	self.addEdit = function (info) {
+		window.location.href = "/Recipe/AddRecipe?Id=" + info.Id;
+		//$.post("/Recipe/AddRecipe?Id=" + info.Id);
 	}
 
 self.getRecipesForUser();
 };
-	
+
+var newUrl = '@Url.Action("Registration","Home")';
+
 var getUserInfo = function () {
 		$.ajax({
 			type: "POST",

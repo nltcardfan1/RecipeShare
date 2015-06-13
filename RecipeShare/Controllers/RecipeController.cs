@@ -22,7 +22,7 @@ namespace RecipeShare.Controllers
 
 	    public ActionResult EditRecipe(RecipeViewModel rvm)
 	    {
-		    return RedirectToAction("AddRecipe", "Recipe");
+		    return View("AddRecipe");
 	    }
 		//public JsonResult GetFoods(string search)
 		//{

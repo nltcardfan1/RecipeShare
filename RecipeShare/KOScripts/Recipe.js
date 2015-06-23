@@ -36,12 +36,31 @@ var recipeVm = function(data) {
 	self.step = ko.observable();
 	self.instructions = ko.observableArray();
 	self.errors = ko.validation.group(self);
+	self.getRecipe = function (data) {
+		$.ajax({
+			type: "POST",
+			url: '/Recipe/GetRecipe',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: "{'id':" + data + "}",
+			success: function (data) {
+				self.update(data);
 
+			},
+
+			error: function (err) {
+				//alert(err.status + " - " + err.statusText);
+			}
+		});
+	}
+
+	//coming from edit, data is ID of recipe
+	if (data === parseInt(data, 10)) {
+		self.getRecipe(data);
+	}
 	if (typeof data != "undefined") {
 		self.update(data);
 	}
-
-	
 
 
 	//self.getFoodGroups = function() {
@@ -131,6 +150,7 @@ var recipeVm = function(data) {
 			toastrError();
 		}
 	}
+	
 	self.getRecipeCategories();
 }
 
@@ -145,10 +165,24 @@ var recipeVm = function(data) {
 recipeVm.prototype.update = function (data) {
 	var self = this;
 	self.recipeId(data.Id || "");
-	self.name(data.name || "");
-	self.serves(data.serves || "");
-	self.prepTime(data.PrepTimeMinutes || "");
-	self.cookTime(data.CookTimeMinutes || "");
+	self.name(data.Name || "");
+	self.serves(data.Serves || "");
+	self.prepTime(data.PrepTime || "");
+	self.cookTime(data.CookTime || "");
+	if (typeof data.Ingredients != "undefined") {
+		ko.utils.arrayForEach(data.Ingredients, function (item) {
+			self.food(item.Food);
+			self.amount(item.Amount);
+			self.addIngredient();
+		});
+	}
+	if (typeof data.Instructions != "undefined") {
+		ko.utils.arrayForEach(data.Instructions, function (item) {
+			self.step(item.Narrative);
+			self.addStep();
+		});
+	}
+
 };
 
 

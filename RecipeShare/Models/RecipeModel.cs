@@ -26,7 +26,6 @@ namespace RecipeShare.Models
 			public string Narrative { get; set; }
 
 
-			public virtual Recipe Recipe { get; set; }
 
 
 		}

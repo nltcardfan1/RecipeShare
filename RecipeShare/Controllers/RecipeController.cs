@@ -45,41 +45,76 @@ namespace RecipeShare.Controllers
 		[HttpPost]
 		public ActionResult SaveRecipe(RecipeViewModel data)
 		{
+
 			var dbContext = new RecipeShareDbContext();
-			var recipe = new RecipeModel.Recipe
+			if (data.Id != 0)
 			{
-				Name = data.Name,
-				AspNetUserId = Convert.ToInt32(User.Identity.GetUserId()),
-				CookTimeMinutes = data.CookTime,
-				PrepTimeMinutes = data.PrepTime,
-				Serves = data.Serves,
-				Ingredients = new List<RecipeModel.Ingredient>()
-			};
+				var recipeToUpdate = dbContext.Recipes.First(x => x.Id == data.Id);
+				recipeToUpdate.Name = data.Name;
+				recipeToUpdate.AspNetUserId = Convert.ToInt32(User.Identity.GetUserId());
+				recipeToUpdate.CookTimeMinutes = data.CookTime;
+				recipeToUpdate.PrepTimeMinutes = data.PrepTime;
+				recipeToUpdate.Serves = data.Serves;
+				dbContext.Ingredients.RemoveRange(dbContext.Ingredients.Where(c => c.RecipeId == data.Id));
+				dbContext.Instructions.RemoveRange(dbContext.Instructions.Where(c => c.RecipeId == data.Id));
 
-			foreach (var ingredient in data.Ingredients)
-			{
-				recipe.Ingredients.Add(new RecipeModel.Ingredient()
+				foreach (var ingredient in data.Ingredients)
 				{
-					Amount = ingredient.Amount,
-					Food = ingredient.Food,
-				});
-			}
+					recipeToUpdate.Ingredients.Add(new RecipeModel.Ingredient()
+					{
+						Amount = ingredient.Amount,
+						Food = ingredient.Food,
+					});
+				}
+				for (int i = 1; i <= data.Instructions.Count; i++)
+				{
 
-			recipe.Instructions = new List<RecipeModel.Instruction>();
-			for (int i = 1; i <= data.Instructions.Count; i++)
+					recipeToUpdate.Instructions.Add(new RecipeModel.Instruction()
+					{
+						InstructionNumber = i,
+						Narrative = data.Instructions[i - 1].Narrative, //Dear lord.... help me
+
+					});
+				}
+
+			}
+			else
+			{
+				var recipe = new RecipeModel.Recipe
+				{
+					Name = data.Name,
+					AspNetUserId = Convert.ToInt32(User.Identity.GetUserId()),
+					CookTimeMinutes = data.CookTime,
+					PrepTimeMinutes = data.PrepTime,
+					Serves = data.Serves,
+					Ingredients = new List<RecipeModel.Ingredient>()
+				};
+
+				foreach(var ingredient in data.Ingredients)
+				{
+					recipe.Ingredients.Add(new RecipeModel.Ingredient()
+					{
+						Amount = ingredient.Amount,
+						Food = ingredient.Food,
+					});
+				}
+
+				recipe.Instructions = new List<RecipeModel.Instruction>();
+				for(int i = 1;i <= data.Instructions.Count;i++)
+				{
+
+					recipe.Instructions.Add(new RecipeModel.Instruction()
+					{
+						InstructionNumber = i,
+						Narrative = data.Instructions[i - 1].Narrative, //Dear lord.... help me
+
+					});
+				}
+
+				dbContext.Recipes.AddOrUpdate(recipe);
+
+			}
 			
-			{
-
-				recipe.Instructions.Add(new RecipeModel.Instruction()
-				{
-					InstructionNumber = i,
-					Narrative = data.Instructions[i - 1].Narrative, //Dear lord.... help me
-
-				});
-			}
-
-
-			dbContext.Recipes.Add(recipe);
 			dbContext.SaveChanges();
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}

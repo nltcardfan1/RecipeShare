@@ -23,7 +23,7 @@ var Step = function(narrative) {
 
 var recipeVm = function(data) {
 	var self = this;
-	self.recipeId = ko.observable();
+	self.Id = ko.observable();
 	self.name = ko.observable().extend({required:true});
 	self.foodGroups = ko.observableArray();
 	self.recipeCategories = ko.observableArray();
@@ -164,7 +164,7 @@ var recipeVm = function(data) {
 
 recipeVm.prototype.update = function (data) {
 	var self = this;
-	self.recipeId(data.Id || "");
+	self.Id(data.Id || "");
 	self.name(data.Name || "");
 	self.serves(data.Serves || "");
 	self.prepTime(data.PrepTime || "");

@@ -27,8 +27,6 @@ var ProfileVM = function(data) {
 			success: function(data) {
 
 				$.each(data, function(index, value) {
-					var recipe = new recipeVm(data);
-
 					self.recipes.push(value);
 				});
 
@@ -40,12 +38,36 @@ var ProfileVM = function(data) {
 		});
 	}
 
+	self.getGroupsForUser = function () {
+		$.ajax({
+			type: "POST",
+			url: '/Profile/getGroupsForUser',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (data) {
+
+				$.each(data, function (index, value) {
+					var recipe = new recipeVm(data);
+
+					self.groups.push(value);
+				});
+
+			},
+
+			error: function (err) {
+				//alert(err.status + " - " + err.statusText);
+			}
+		});
+		
+	}
+
 	self.addEdit = function (info) {
 		window.location.href = "/Recipe/EditRecipe?Id=" + info.Id;
 		//$.post("/Recipe/AddRecipe?Id=" + info.Id);
 	}
 
-self.getRecipesForUser();
+	self.getRecipesForUser();
+	self.getGroupsForUser();
 };
 
 var newUrl = '@Url.Action("Registration","Home")';

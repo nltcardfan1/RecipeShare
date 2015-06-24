@@ -10,7 +10,8 @@
 <h1>Profile for <span data-bind="text:fullName"></span></h1>
 	<a class="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
 	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Manage Groups</a>
-	<table class="table" >
+	<h1>Recipes</h1>
+	<table class="table">
 		<tr>
 			<th>Name</th>
 			<th>Category</th>
@@ -20,19 +21,35 @@
 			<th></th>
 		</tr>
 		<tbody data-bind="foreach: recipes">
+		<tr>
+			<td data-bind="text:Name"></td>
+			<td data-bind="text:RecipeCategory"></td>
+			<td data-bind="text:Serves"></td>
+			<td data-bind="text:CookTimeMinutes"></td>
+			<td data-bind="text:PrepTimeMinutes"></td>
+			<td>
+				<a data-bind="click:$parent.addEdit" href="#" class="fa fa-pencil fa-lg"></a>
+				<a href="#" class="fa fa-eye fa-lg"></a>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<h1>Groups</h1>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th></th>
+		</tr>
+		<tbody data-bind="foreach: groups">
 			<tr>
 				<td data-bind="text:Name"></td>
-				<td data-bind="text:RecipeCategory"></td>
-				<td data-bind="text:Serves"></td>
-				<td data-bind="text:CookTimeMinutes"></td>
-				<td data-bind="text:PrepTimeMinutes"></td>
 				<td>
-					<a data-bind="click:$parent.addEdit" href="#" class="fa fa-pencil fa-lg"></a>
 					<a href="#" class="fa fa-eye fa-lg"></a>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+
 </body>
 
 

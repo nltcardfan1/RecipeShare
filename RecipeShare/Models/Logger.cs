@@ -98,7 +98,6 @@ namespace RecipeShare.Models
 					using(StreamWriter sw = File.AppendText(path))
 					{
 						sw.Write(stb.ToString());
-						sw.Close();
 					}
 				}
 			}
@@ -353,11 +352,7 @@ namespace RecipeShare.Models
 
 				stb.AppendLine();
 				stb.AppendLine();
-				lock(typeof(Logger))
-				{
-					//WriteToFile(stb,false);
-					//WriteToFile(stb, false);
-				}
+	
 
 				log.Message = stb.ToString();
 				log.UserId = Convert.ToInt32(HttpContext.Current.User.Identity.GetUserId());

@@ -1,4 +1,9 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
+@model RecipeShare.Models.ProfileViewModel
+@{
+	var userId = Convert.ToInt32(User.Identity.GetUserId());			  
+}
+
 <head>
 	<meta name="viewport" content="width=device-width"/>
 	<title>View</title>
@@ -7,7 +12,7 @@
 @Scripts.Render("~/KOScripts/Recipe.js")
 @*<script src="~/Controllers/User.js"></script>*@
 <body>
-<h1>Profile for <span data-bind="text:fullName"></span></h1>
+	<h1>Profile for <span data-bind="text:fullName"></span></h1>
 	<a class="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
 	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Manage Groups</a>
 	<h1>Recipes</h1>
@@ -20,35 +25,61 @@
 			<th>Prep Time</th>
 			<th></th>
 		</tr>
-		<tbody data-bind="foreach: recipes">
-		<tr>
-			<td data-bind="text:Name"></td>
-			<td data-bind="text:RecipeCategory"></td>
-			<td data-bind="text:Serves"></td>
-			<td data-bind="text:CookTimeMinutes"></td>
-			<td data-bind="text:PrepTimeMinutes"></td>
-			<td>
-				<a data-bind="click:$parent.addEdit" href="#" class="fa fa-pencil fa-lg"></a>
-				<a href="#" class="fa fa-eye fa-lg"></a>
-			</td>
-		</tr>
-		</tbody>
-	</table>
-	<h1>Groups</h1>
-	<table class="table">
-		<tr>
-			<th>Name</th>
-			<th></th>
-		</tr>
-		<tbody data-bind="foreach: groups">
+		<tbody>
+		@foreach (var recipe in Model.Recipes)
+		{
 			<tr>
-				<td data-bind="text:Name"></td>
+				<td>@Html.Encode(recipe.Name)</td>
+				<td>@Html.Encode(recipe.RecipeCategory)</td>
+				<td>@Html.Encode(recipe.Serves)</td>
+				<td>@Html.Encode(recipe.CookTimeMinutes)</td>
+				<td>@Html.Encode(recipe.PrepTimeMinutes)</td>
 				<td>
+					@if (recipe.CreatedByUser.Id == userId)
+					{
+						<a href="#" class="fa fa-pencil fa-lg"></a>
+					}
 					<a href="#" class="fa fa-eye fa-lg"></a>
 				</td>
 			</tr>
+
+		}
 		</tbody>
 	</table>
+		<h1>Groups</h1>
+		<table class="table">
+			<tr>
+				<th>Name</th>
+				<th></th>
+			</tr>
+		<tbody>
+		@foreach (var group in Model.Groups)
+		{
+			<tr>
+				<td>@group.Name</td>
+				<td>
+					<a href="#" class="fa fa-pencil fa-lg"></a>
+					<a href="#" class="fa fa-eye fa-lg"></a>
+				</td>
+			</tr>
+
+		}
+		</tbody>
+		</table>
+							@*<table class="table">
+							<tr>
+								<th>Name</th>
+								<th></th>
+							</tr>
+							<tbody data-bind="foreach: groups">
+								<tr>
+									<td data-bind="text:Name"></td>
+									<td>
+										<a href="#" class="fa fa-eye fa-lg"></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>*@
 
 </body>
 

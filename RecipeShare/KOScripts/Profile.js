@@ -13,8 +13,8 @@ var ProfileVM = function(data) {
 	self.userId = ko.observable(data.Id);
 	self.firstName = ko.observable(data.FirstName);
 	self.lastName = ko.observable(data.LastName);
-	self.recipes = ko.observableArray();
-	self.groups = ko.observableArray();
+	//self.recipes = ko.observableArray();
+	//self.groups = ko.observableArray();
 	self.fullName = ko.computed(function() {
 		return self.firstName() + " " + self.lastName();
 	}, self);
@@ -38,39 +38,39 @@ var ProfileVM = function(data) {
 		});
 	}
 
-	self.getGroupsForUser = function () {
-		$.ajax({
-			type: "POST",
-			url: '/Profile/getGroupsForUser',
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function (data) {
+	//self.getGroupsForUser = function () {
+	//	$.ajax({
+	//		type: "POST",
+	//		url: '/Profile/getGroupsForUser',
+	//		contentType: "application/json; charset=utf-8",
+	//		dataType: "json",
+	//		success: function (data) {
 
-				$.each(data, function (index, value) {
-					var recipe = new recipeVm(data);
+	//			$.each(data, function (index, value) {
+	//				var recipe = new recipeVm(data);
 
-					self.groups.push(value);
-				});
+	//				self.groups.push(value);
+	//			});
 
-			},
+	//		},
 
-			error: function (err) {
-				//alert(err.status + " - " + err.statusText);
-			}
-		});
+	//		error: function (err) {
+	//			//alert(err.status + " - " + err.statusText);
+	//		}
+	//	});
 		
-	}
+	//}
 
-	self.addEdit = function (info) {
-		window.location.href = "/Recipe/EditRecipe?Id=" + info.Id;
-		//$.post("/Recipe/AddRecipe?Id=" + info.Id);
-	}
+	//self.addEdit = function (info) {
+	//	window.location.href = "/Recipe/EditRecipe?Id=" + info.Id;
+	//	//$.post("/Recipe/AddRecipe?Id=" + info.Id);
+	//}
 
-	self.getRecipesForUser();
-	self.getGroupsForUser();
+	//self.getRecipesForUser();
+	//self.getGroupsForUser();
 };
 
-var newUrl = '@Url.Action("Registration","Home")';
+//var newUrl = '@Url.Action("Registration","Home")';
 
 var getUserInfo = function () {
 		$.ajax({

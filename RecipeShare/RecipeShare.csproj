@@ -234,6 +234,7 @@
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ProfileViewModel.cs" />
     <Compile Include="Models\RecipeModel.cs" />
     <Compile Include="Models\RecipeShare.cs" />
     <Compile Include="Models\RecipeViewModel.cs" />
@@ -341,6 +342,7 @@
     <Content Include="Content\DataTables\css\dataTables.jqueryui.scss" />
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
+    <Content Include="App_Code\RazorHelpers.cshtml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Icon.png" />
     <Content Include="KOScripts\Recipe.js" />
@@ -433,7 +435,6 @@
     <Content Include="Views\Group\AddEditGroups.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Views\Email\" />
   </ItemGroup>

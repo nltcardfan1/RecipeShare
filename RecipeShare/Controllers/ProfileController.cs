@@ -36,7 +36,17 @@ namespace RecipeShare.Controllers
 
 		public ActionResult Index()
 		{
-			return View();
+			var dbContext = new RecipeShareDbContext();
+			int id = Convert.ToInt32(User.Identity.GetUserId());
+			var profileInfo = dbContext.AspNetUsers
+				.Where(netUser => netUser.Id == id)
+				.Select(netuser => new ProfileViewModel
+				{
+					Groups = netuser.RecipeGroups,
+					Recipes = netuser.Recipes,
+
+				}).First();
+			return View(profileInfo);
 		}
 
 		[HttpPost]

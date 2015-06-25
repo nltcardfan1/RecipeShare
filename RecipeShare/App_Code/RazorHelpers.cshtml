@@ -1,0 +1,83 @@
+﻿@helper GeneratePaging(int currentPage,int totalPages)
+{
+	var previousPageIsEllipsis = false;
+
+	if(totalPages > 1)
+	{
+		<div class="pagination-centered">
+			<ul class="pagination">
+				@*/* Loop through each page */*@
+				@for(int p = 1;p <= totalPages;p++)
+				{
+					@* Add left arrow *@
+					if(p == 1)
+					{
+						if(p == currentPage)
+						{
+							<li class="arrow unavailable">
+								
+							</li>
+						}
+						else
+						{
+							<li class="arrow"><a href="?page=@(currentPage - 1)" title="Previous page">‹</a></li>
+						}
+					}
+
+					if(p == currentPage ||
+						p == 1 ||
+						p == currentPage - 1 ||
+						p == currentPage + 1 ||
+						p == totalPages - 1 ||
+						p == totalPages)
+					{
+						string current = (p == currentPage) ? "current" : String.Empty;
+						<li class="@current">
+							<a href="?page=@p" title="Go to page @p">@p</a>
+						</li>
+						previousPageIsEllipsis = false;
+					}
+					else
+					{
+						if(previousPageIsEllipsis)
+						{
+							continue;
+						}
+						else
+						{
+							<li class="unavailable">
+								…
+							</li>
+							previousPageIsEllipsis = true;
+						}
+					}
+
+					@* Add right arrow *@
+					if(p == totalPages)
+					{
+						if(p == currentPage)
+						{
+							<li class="arrow unavailable">
+								›
+							</li>
+						}
+						else
+						{
+							<li class="arrow"><a href="?page=@(currentPage + 1)" title="Next page">›</a></li>
+						}
+					}
+				}
+			</ul>
+		</div>
+	}
+	else
+	{
+		<div class="pagination-centered">
+			<ul class="pagination">
+				<li class="current">
+					<a>1</a>
+				</li>
+			</ul>
+		</div>
+	}
+}

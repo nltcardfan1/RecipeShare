@@ -46,12 +46,12 @@
 		}
 		</tbody>
 	</table>
-		<h1>Groups</h1>
-		<table class="table">
-			<tr>
-				<th>Name</th>
-				<th></th>
-			</tr>
+	<h1>Groups</h1>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th></th>
+		</tr>
 		<tbody>
 		@foreach (var group in Model.Groups)
 		{
@@ -65,8 +65,8 @@
 
 		}
 		</tbody>
-		</table>
-							@*<table class="table">
+	</table>
+	@*<table class="table">
 							<tr>
 								<th>Name</th>
 								<th></th>
@@ -80,7 +80,50 @@
 								</tr>
 							</tbody>
 						</table>*@
+	<table style ="table" id="example">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Prep Time</th>
+				<th>Cook Time</th>
+				<th>Serves</th>
+				<th></th>
+			</tr>
+		</thead>
+	</table>
 
 </body>
+
+@section Scripts{
+	<script type="text/javascript">
+		$(function() {
+			$.ajax({
+				type: "POST",
+				url: '/Profile/GetRecipesForUser',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+					debugger;
+					$('#example').dataTable({
+						
+						"data": data,
+						"columns": [
+						{"data" : "Name" },
+						//{ "data": "RecipeCategory" },
+						{ "data": "PrepTimeMinutes" },
+						{ "data": "CookTimeMinutes" },
+						{ "data": "Serves" }
+						]
+
+					});
+				},
+
+				error: function (err) {
+					//alert(err.status + " - " + err.statusText);
+				}
+			});
+		})
+	</script>
+}
 
 

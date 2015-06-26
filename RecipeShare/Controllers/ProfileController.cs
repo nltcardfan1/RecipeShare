@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using RecipeShare.Models;
 
 namespace RecipeShare.Controllers
@@ -50,7 +52,7 @@ namespace RecipeShare.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult GetRecipesForUser()
+		public ActionResult GetRecipesForUser()
 		{
 			var dbContext = new RecipeShareDbContext();
 			int id = Convert.ToInt32(User.Identity.GetUserId());
@@ -58,13 +60,13 @@ namespace RecipeShare.Controllers
 				.Select(recipe => new
 				{
 					recipe.Name,
-					recipe.RecipeCategory,
 					recipe.PrepTimeMinutes,
 					recipe.CookTimeMinutes,
 					recipe.Id,
 					recipe.Serves
 
-				}).ToList();
+				}).ToArray();
+
 			return Json(recipes);
 		}
 

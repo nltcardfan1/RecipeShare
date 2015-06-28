@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,6 +17,11 @@ namespace RecipeShare.Controllers
         {
             return View();
         }
+
+	    public ActionResult EditGroups(int id)
+	    {
+		    return View("AddEditGroups", id);
+	    }
 
 		[HttpPost]
 	    public ActionResult SaveGroup(GroupViewModel data)
@@ -40,6 +46,27 @@ namespace RecipeShare.Controllers
 			dbcontext.SaveChanges();
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 
+	    }
+
+	    [HttpPost]
+	    public ActionResult GetGroupInfo(int id)
+		{
+			int userId = Convert.ToInt32(User.Identity.GetUserId());
+			var dbcontext = new RecipeShareDbContext();
+		//	var ret = from g in dbcontext.RecipeGroups
+		//			  join userLU in dbcontext.
+		//			  on user.Id in g.AdminId
+		//			  where g.AdminId
+			var ret = dbcontext.RecipeGroups.Where(x => x.Id == id)
+				.Select(x => new 
+				{
+					Name = x.Name,
+					UserEmails = x.Members.Select(z => z.Email)
+				}).First();
+
+			
+
+		    return Json(ret);
 	    }
     }
 }

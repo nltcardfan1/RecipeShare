@@ -38,17 +38,17 @@ namespace RecipeShare.Controllers
 
 		public ActionResult Index()
 		{
-			var dbContext = new RecipeShareDbContext();
-			int id = Convert.ToInt32(User.Identity.GetUserId());
-			var profileInfo = dbContext.AspNetUsers
-				.Where(netUser => netUser.Id == id)
-				.Select(netuser => new ProfileViewModel
-				{
-					Groups = netuser.RecipeGroups,
-					Recipes = netuser.Recipes,
+			//var dbContext = new RecipeShareDbContext();
+			//int id = Convert.ToInt32(User.Identity.GetUserId());
+			//var profileInfo = dbContext.AspNetUsers
+			//	.Where(netUser => netUser.Id == id)
+			//	.Select(netuser => new ProfileViewModel
+			//	{
+			//		Groups = netuser.RecipeGroups,
+			//		Recipes = netuser.Recipes,
 
-				}).First();
-			return View(profileInfo);
+			//	}).First();
+			return View();
 		}
 
 		[HttpPost]
@@ -78,6 +78,7 @@ namespace RecipeShare.Controllers
 			var groups = dbContext.RecipeGroups.Where(x=> x.AdminId == id || x.Members.Contains(dbContext.AspNetUsers.FirstOrDefault(y => y.Id == id)))
 				.Select(group => new
 				{
+					group.Id,
 					group.Name
 
 				}).ToList();

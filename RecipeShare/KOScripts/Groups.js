@@ -3,7 +3,7 @@
 	self.userEmail = ko.observable(userEmail);
 }
 
-var groupVm = function () {
+var groupVm = function (data) {
 	var self = this;
 	self.name = ko.observable();
 	self.userEmails = ko.observableArray();
@@ -14,7 +14,7 @@ var groupVm = function () {
 		if (self.memberToAdd()) {
 			self.userEmails.push(self.memberToAdd());
 			self.memberToAdd("");
-			console.log(self.members());
+			//console.log(self.members());
 		} else {
 			toastrError();
 		}
@@ -45,7 +45,40 @@ var groupVm = function () {
 			toastrError();
 		}
 	}
+	self.getGroupInfo = function (data) {
+		$.ajax({
+			type: "POST",
+			url: '/Group/GetGroupInfo',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: "{'id':" + data + "}",
+			success: function (data) {
+				self.update(data);
+			},
+
+			error: function (err) {
+				//alert(err.status + " - " + err.statusText);
+			}
+		});
+		
+	}
+
+	if (data === parseInt(data, 10)) {
+		self.getGroupInfo(data);
+	}
+	if (typeof data != "undefined") {
+		self.update(data);
+	}
 }
-$(document).ready(function() {
-	ko.applyBindings(new groupVm());
-});
+
+groupVm.prototype.update = function (data) {
+	var self = this;
+	self.name(data.Name || "");
+	if (typeof data.UserEmails != "undefined") {
+		ko.utils.arrayForEach(data.UserEmails, function (item) {
+			self.memberToAdd(item);
+			self.addMember();
+		});
+	}
+	
+}

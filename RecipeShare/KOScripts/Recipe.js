@@ -58,9 +58,9 @@ var recipeVm = function(data) {
 	if (data === parseInt(data, 10)) {
 		self.getRecipe(data);
 	}
-	if (typeof data != "undefined") {
-		self.update(data);
-	}
+	//if (typeof data != "undefined") {
+	//	self.update(data);
+	//}
 
 
 	//self.getFoodGroups = function() {

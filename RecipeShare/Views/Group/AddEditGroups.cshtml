@@ -12,19 +12,19 @@
 	<h3>
 		Editing Group <strong data-bind="text:name"></strong>
 	</h3>
-		<div class=" col-md-4">
-			<div class="form-group">
-				<label>Name:</label>
-				<input type="text" class="form-control" data-bind="textInput: name"/>
-			</div>
-		</div>
 	<div class=" col-md-4">
-			<div class="input-group">
-				<input type="text" class="form-control" data-bind='value:memberToAdd, valueUpdate: "afterkeydown"'>
-				<span class="input-group-btn">
+		<div class="form-group">
+			<label>Name:</label>
+			<input type="text" class="form-control" data-bind="textInput: name"/>
+		</div>
+	</div>
+	<div class=" col-md-4">
+		<div class="input-group">
+			<input type="text" class="form-control" data-bind='value:memberToAdd, valueUpdate: "afterkeydown"'>
+			<span class="input-group-btn">
 					<button class="btn btn-green" type="button" data-bind="enable: memberToAdd().length > 0, click:addMember">Add</button>
 				</span>
-			</div><!-- /input-group -->
+		</div><!-- /input-group -->
 		@*Add item: <input type="text" class="form-control " data-bind='value:memberToAdd, valueUpdate: "afterkeydown"'/>
 		<a href="#" class=" btn btn-green" type="submit" data-bind="enable: memberToAdd().length > 0, click:addMember">Add</a>*@
 
@@ -34,8 +34,16 @@
 		<div>
 			<a href="#" class="btn btn-red" data-bind="click: removeSelected, enable: selectedItems().length > 0">Remove</a>
 		</div>
-		<a href="#" class = "btn btn-green"data-bind="click:saveGroup">Save</a>
+		<a href="#" class="btn btn-green"data-bind="click:saveGroup">Save</a>
 	</div>
 	<div class="clearfix"></div>
 </body>
 </html>
+
+@section Scripts{
+	<script type="text/javascript">
+		$(document).ready(function () {
+			ko.applyBindings(new groupVm(@Model));
+		});
+	</script>
+}

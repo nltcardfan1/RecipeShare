@@ -16,7 +16,7 @@
 	<a class="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
 	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Manage Groups</a>
 	<h1>Recipes</h1>
-	<table class="table">
+	@*<table class="table">
 		<tr>
 			<th>Name</th>
 			<th>Category</th>
@@ -45,9 +45,8 @@
 
 		}
 		</tbody>
-	</table>
-	<h1>Groups</h1>
-	<table class="table">
+	</table>*@
+	@*<table class="table">
 		<tr>
 			<th>Name</th>
 			<th></th>
@@ -58,14 +57,14 @@
 			<tr>
 				<td>@group.Name</td>
 				<td>
-					<a href="#" class="fa fa-pencil fa-lg"></a>
+					<a href=@Url.Action("EditGroups","Group", new {Id = group.Id}) class="fa fa-pencil fa-lg"></a>
 					<a href="#" class="fa fa-eye fa-lg"></a>
 				</td>
 			</tr>
 
 		}
 		</tbody>
-	</table>
+	</table>*@
 	@*<table class="table">
 							<tr>
 								<th>Name</th>
@@ -80,16 +79,40 @@
 								</tr>
 							</tbody>
 						</table>*@
-	<table id="example">
+	<table id="recipes">
+		<thead>
+		<tr>
+			<th>Name</th>
+			<th>Prep Time</th>
+			<th>Cook Time</th>
+			<th>Serves</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		</tbody>
+	</table>
+
+	<h1>Groups</h1>
+	<table id="groups">
 		<thead>
 			<tr>
 				<th>Name</th>
-				<th>Prep Time</th>
-				<th>Cook Time</th>
-				<th>Serves</th>
 				<th></th>
 			</tr>
 		</thead>
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
 	</table>
 
 </body>
@@ -103,8 +126,7 @@
 				contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (data) {
-					debugger;
-					$('#example').dataTable({
+					$('#recipes').dataTable({
 						
 						"data": data,
 						"columns": [
@@ -113,6 +135,44 @@
 						{ "data": "PrepTimeMinutes" },
 						{ "data": "CookTimeMinutes" },
 						{ "data": "Serves" }
+						],
+						"aoColumnDefs": [
+							{
+								"aTargets": [4],
+								"mData": null,
+								"mRender": function (data, type, full) {
+									return "<a href=/Recipe/EditRecipe/" + data.Id + " class='fa fa-pencil fa-lg'></a>"; 
+								}
+							}
+						]
+
+					});
+				},
+
+				error: function (err) {
+					//alert(err.status + " - " + err.statusText);
+				}
+			});
+			$.ajax({
+				type: "POST",
+				url: '/Profile/GetGroupsForUser',
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+					$('#groups').dataTable({
+
+						"data": data,
+						"columns": [
+						{ "data": "Name" }
+						],
+						"aoColumnDefs": [
+							{
+								"aTargets": [1],
+								"mData": null,
+								"mRender": function (data, type, full) {
+									return "<a href=/Group/EditGroups/" + data.Id + " class='fa fa-pencil fa-lg'></a>";
+								}
+							}
 						]
 
 					});

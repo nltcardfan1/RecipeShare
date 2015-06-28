@@ -119,13 +119,6 @@ namespace RecipeShare.Controllers
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 		}
 
-		//[HttpPost]
-		//public ActionResult UpdateRecipe(RecipeViewModel data)
-		//{
-
-		//}
-
-		[HttpPost]
 		public ActionResult GetRecipe(int id)
 		{
 			var dbContext = new RecipeShareDbContext();

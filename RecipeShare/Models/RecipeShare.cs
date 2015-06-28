@@ -56,7 +56,7 @@ namespace RecipeShare.Models
 
 			modelBuilder.Entity<GroupModel.RecipeGroup>()
 				.HasMany(x => x.AspNetUsers)
-				.WithMany(x=> x.RecipeGroups)
+				.WithMany(x => x.RecipeGroups)
 				.Map(t => t.ToTable("RecipeGroupUsers")
 					.MapLeftKey("RecipeGroupId")
 					.MapRightKey("AspNetUserId"));

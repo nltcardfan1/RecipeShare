@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using RecipeShare.Models;
@@ -30,19 +32,22 @@ namespace RecipeShare.Controllers
 			var dbcontext = new RecipeShareDbContext();
 			if (data.Id != 0)
 			{
-				var groupToUpdate = dbcontext.RecipeGroups.First(x => x.Id == data.Id);
+				var groupToUpdate = dbcontext.RecipeGroups.Include(x=> x.AspNetUsers).First(x => x.Id == data.Id);
 				groupToUpdate.Name = data.Name;
-				//groupToUpdate.AspNetUsers.Remove();
+
+				//JUST KILL ME NOW
+				var users = groupToUpdate.AspNetUsers.Select(x => x).ToList();
+				foreach (var user in users)
+				{
+					groupToUpdate.AspNetUsers.Remove(user);
+				}
+
 				dbcontext.SaveChanges();
-				groupToUpdate.AspNetUsers = new List<AspNetUser>();
 				foreach(var email in data.UserEmails)
 				{
 					if (dbcontext.AspNetUsers.Any(x => x.Email == email))
 					{
-						groupToUpdate.AspNetUsers.Add(new AspNetUser()
-						{
-							Id = dbcontext.AspNetUsers.First(x => x.Email == email).Id
-						});
+						groupToUpdate.AspNetUsers.Add(dbcontext.AspNetUsers.First(x => x.Email == email));
 					}
 				}
 			}
@@ -64,9 +69,26 @@ namespace RecipeShare.Controllers
 
 				dbcontext.RecipeGroups.Add(group);
 			}
-		
-				
-			dbcontext.SaveChanges();
+
+			try
+			{
+
+				dbcontext.SaveChanges();
+			}
+			catch(DbEntityValidationException e)
+			{
+				foreach(var eve in e.EntityValidationErrors)
+				{
+					Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+						eve.Entry.Entity.GetType().Name,eve.Entry.State);
+					foreach(var ve in eve.ValidationErrors)
+					{
+						Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+							ve.PropertyName,ve.ErrorMessage);
+					}
+				}
+				throw;
+			}
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 
 	    }

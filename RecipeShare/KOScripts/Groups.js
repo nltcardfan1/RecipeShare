@@ -5,6 +5,7 @@
 
 var groupVm = function (data) {
 	var self = this;
+	self.id = ko.observable(); 
 	self.name = ko.observable();
 	self.userEmails = ko.observableArray();
 	self.memberToAdd = ko.observable("");
@@ -20,7 +21,7 @@ var groupVm = function (data) {
 		}
 	}
 	self.removeSelected = function () {
-		this.members.removeAll(self.selectedItems());
+		this.userEmails.removeAll(self.selectedItems());
 		this.selectedItems([]); // Clear selection
 	};
 	self.errors = ko.validation.group(self);
@@ -66,14 +67,12 @@ var groupVm = function (data) {
 	if (data === parseInt(data, 10)) {
 		self.getGroupInfo(data);
 	}
-	if (typeof data != "undefined") {
-		self.update(data);
-	}
 }
 
 groupVm.prototype.update = function (data) {
 	var self = this;
 	self.name(data.Name || "");
+	self.id(data.Id || "");
 	if (typeof data.UserEmails != "undefined") {
 		ko.utils.arrayForEach(data.UserEmails, function (item) {
 			self.memberToAdd(item);

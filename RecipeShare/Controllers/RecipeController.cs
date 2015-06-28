@@ -29,7 +29,10 @@ namespace RecipeShare.Controllers
 			return View("AddRecipe", id);
 		}
 
-		
+		public ActionResult ViewRecipe(int id)
+		{
+			return View("ViewRecipe",id);
+		}
 
 		public JsonResult GetRecipeCategories()
 		{

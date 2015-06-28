@@ -126,7 +126,7 @@ var recipeVm = function(data) {
 		self.instructions.remove(this);
 	}
 	self.saveRecipe = function () {
-		console.log(ko.toJSON(self));
+		//console.log(ko.toJSON(self));
 		if (self.errors().length === 0) {
 		$.ajax({
 			type: "POST",

@@ -1,0 +1,64 @@
+﻿<script src="~/KOScripts/Recipe.js"></script>
+<body>
+	<h3>
+		Viewing Recipe <strong data-bind="text:name"></strong>
+	</h3>
+	<div class=" col-md-4">
+		<div class="form-group">
+			<label>Name:</label>
+			<span data-bind="text: name" ></span>
+		</div>
+		@*<div class="form-group">
+			<label>Category:</label>
+			<select class="form-control" data-bind="options: recipeCategories, optionsText: 'recipeCategory'"></select>
+		</div>*@
+		<div class="form-group">
+			<label>Serves:</label>
+			<span data-bind="text: serves"></span>
+		</div>
+	</div>
+	<div class=" col-md-4">
+		<div class="form-group">
+			<label>Prep Time:</label>
+			<span data-bind="text: prepTime"></span>
+		</div>
+		<div class="form-group">
+			<label>Cook Time:</label>
+			<span data-bind="text: cookTime"></span>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+
+	<h2>Ingredients</h2>
+	<div class="col-md-6">
+		<ul class="list-group" data-bind="foreach: ingredients">
+			<li class=" list-group-item">
+				<h4 class="" data-bind="text:formated"></h4>
+				@*<a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
+			</li>
+
+		</ul>
+	</div>
+	<div class=" clearfix"></div>
+	<h2>Instructions</h2>
+	<div class="col-md-6">
+		<ul class="list-group" data-bind="foreach: instructions">
+			<li class=" list-group-item">
+				<p>
+					<span data-bind="text:($index()+1)"></span><span>. </span>
+				<p class="" data-bind="text:narrative"></p>
+				</p>@*<a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
+			</li>
+
+		</ul>
+	</div>
+	<div class="clearfix"></div>
+</body>
+
+@section scripts{
+	<script type="text/javascript">
+	$(function () {
+		ko.applyBindings(new recipeVm(@Model));
+	});
+	</script>
+}

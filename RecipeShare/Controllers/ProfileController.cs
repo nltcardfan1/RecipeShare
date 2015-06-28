@@ -75,7 +75,7 @@ namespace RecipeShare.Controllers
 		{
 			var dbContext = new RecipeShareDbContext();
 			int id = Convert.ToInt32(User.Identity.GetUserId());
-			var groups = dbContext.RecipeGroups.Where(x=> x.AdminId == id || x.Members.Contains(dbContext.AspNetUsers.FirstOrDefault(y => y.Id == id)))
+			var groups = dbContext.RecipeGroups.Where(x=> x.AdminId == id || x.AspNetUsers.Contains(dbContext.AspNetUsers.FirstOrDefault(y => y.Id == id)))
 				.Select(group => new
 				{
 					group.Id,

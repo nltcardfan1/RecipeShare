@@ -16,6 +16,7 @@
 	<a class="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
 	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Manage Groups</a>
 	<h1>Recipes</h1>
+	<br/>
 	@*<table class="table">
 		<tr>
 			<th>Name</th>
@@ -100,6 +101,7 @@
 	</table>
 
 	<h1>Groups</h1>
+	<br/>
 	<table id="groups">
 		<thead>
 			<tr>
@@ -130,18 +132,19 @@
 						
 						"data": data,
 						"columns": [
-						{"data" : "Name" },
+						{"data" : "Name", "searchable": true },
 						//{ "data": "RecipeCategory" },
 						{ "data": "PrepTimeMinutes" },
 						{ "data": "CookTimeMinutes" },
-						{ "data": "Serves" }
+						{ "data": "Serves" },
+						{ "width": "150px", "searchable": false, "sortable": false }
 						],
 						"aoColumnDefs": [
 							{
 								"aTargets": [4],
 								"mData": null,
 								"mRender": function (data, type, full) {
-									return "<a href=/Recipe/EditRecipe/" + data.Id + " class='fa fa-pencil fa-lg'></a>"; 
+									return "<a class='btn btn-orange' href=/Recipe/EditRecipe/" + data.Id + " style='margin-right:15px'><i class='fa fa-pencil fa-2x'></i></a><a class='btn btn-lblue' href=/Recipe/ViewRecipe/" + data.Id + "><i class='fa fa-eye fa-2x'></i></a>";
 								}
 							}
 						]

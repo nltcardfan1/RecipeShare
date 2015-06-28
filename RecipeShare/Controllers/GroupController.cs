@@ -28,21 +28,44 @@ namespace RecipeShare.Controllers
 		{
 			int userId = Convert.ToInt32(User.Identity.GetUserId());
 			var dbcontext = new RecipeShareDbContext();
-			var group = new GroupModel.RecipeGroup
+			if (data.Id != 0)
 			{
-				Name = data.Name,
-				AdminId = userId
-			};
+				var groupToUpdate = dbcontext.RecipeGroups.First(x => x.Id == data.Id);
+				groupToUpdate.Name = data.Name;
+				//groupToUpdate.AspNetUsers.Remove();
+				dbcontext.SaveChanges();
+				groupToUpdate.AspNetUsers = new List<AspNetUser>();
+				foreach(var email in data.UserEmails)
+				{
+					if (dbcontext.AspNetUsers.Any(x => x.Email == email))
+					{
+						groupToUpdate.AspNetUsers.Add(new AspNetUser()
+						{
+							Id = dbcontext.AspNetUsers.First(x => x.Email == email).Id
+						});
+					}
+				}
+			}
+			else
+			{
+				var group = new GroupModel.RecipeGroup
+				{
+					Name = data.Name,
+					AdminId = userId
+				};
 
-			group.Members = new List<AspNetUser>();
+				group.AspNetUsers = new List<AspNetUser>();
 
-			var emailHash = new HashSet<string>(data.UserEmails);
-			var users = dbcontext.AspNetUsers.Where(x => emailHash.Contains(x.Email)).ToList();
-			//
-			users.Add(dbcontext.AspNetUsers.First(x => x.Id == userId));
-			users.ForEach(x => group.Members.Add(x));
+				var emailHash = new HashSet<string>(data.UserEmails);
+				var users = dbcontext.AspNetUsers.Where(x => emailHash.Contains(x.Email)).ToList();
+				//
+				users.Add(dbcontext.AspNetUsers.First(x => x.Id == userId));
+				users.ForEach(x => group.AspNetUsers.Add(x));
 
-			dbcontext.RecipeGroups.Add(group);
+				dbcontext.RecipeGroups.Add(group);
+			}
+		
+				
 			dbcontext.SaveChanges();
 			return new HttpStatusCodeResult(HttpStatusCode.OK);
 
@@ -60,8 +83,9 @@ namespace RecipeShare.Controllers
 			var ret = dbcontext.RecipeGroups.Where(x => x.Id == id)
 				.Select(x => new 
 				{
+					x.Id,
 					Name = x.Name,
-					UserEmails = x.Members.Select(z => z.Email)
+					UserEmails = x.AspNetUsers.Select(z => z.Email)
 				}).First();
 
 			

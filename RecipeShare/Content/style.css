@@ -256,7 +256,7 @@ hr {
 	color: #ffffff;
 }
 .btn.btn-lblue {
-	color: #ffffff;
+	/*color: #ffffff;*/
 	background: #32c8de;
 	border: 1px solid #1faabe;
 }
@@ -280,7 +280,7 @@ hr {
 	color: #ffffff;
 }
 .btn.btn-orange {
-	color: #ffffff;
+	/*color: #ffffff;*/
 	background: #f8a841;
 	border: 1px solid #f69110;
 }

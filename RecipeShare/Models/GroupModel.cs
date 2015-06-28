@@ -18,7 +18,7 @@ namespace RecipeShare.Models
 			public int AdminId { get; set; }
 
 			//Id of member List
-			public List<AspNetUser> Members { get; set; }
+			public ICollection<AspNetUser> AspNetUsers { get; set; }
 
 			public ICollection<RecipeModel.Recipe> Recipes { get; set; }
 

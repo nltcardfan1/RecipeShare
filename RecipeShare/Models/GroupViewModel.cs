@@ -7,10 +7,11 @@ namespace RecipeShare.Models
 {
 	public class GroupViewModel
 	{
-			public string Name { get; set; }
+		public int Id { get; set; }
+		public string Name { get; set; }
 
-			public List<String> UserEmails { get; set; }
+		public ICollection<String> UserEmails { get; set; }
 
-			public ICollection<RecipeModel.Recipe> Recipes { get; set; }
+		public ICollection<RecipeModel.Recipe> Recipes { get; set; }
 	}
 }

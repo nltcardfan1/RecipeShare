@@ -210,6 +210,10 @@
     <Compile Include="Migrations\201505220001229_fix reverse keys.Designer.cs">
       <DependentUpon>201505220001229_fix reverse keys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506282013375_group.cs" />
+    <Compile Include="Migrations\201506282013375_group.Designer.cs">
+      <DependentUpon>201506282013375_group.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\GroupViewModel.cs" />
     <Compile Include="Models\Logger.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -433,6 +437,7 @@
     <Content Include="Views\Recipe\AddRecipe.cshtml" />
     <Content Include="Scripts\knockout.validation.min.js.map" />
     <Content Include="Views\Group\AddEditGroups.cshtml" />
+    <Content Include="Views\Recipe\ViewRecipe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -469,6 +474,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505220001229_fix reverse keys.resx">
       <DependentUpon>201505220001229_fix reverse keys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506282013375_group.resx">
+      <DependentUpon>201506282013375_group.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

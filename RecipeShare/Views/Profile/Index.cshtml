@@ -14,72 +14,9 @@
 <body>
 	<h1>Profile for <span data-bind="text:fullName"></span></h1>
 	<a class="btn btn-green "href='@Url.Action("AddRecipe", "Recipe")'>Add Recipe</a>
-	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Manage Groups</a>
+	<a class="btn btn-green " href='@Url.Action("AddEditGroups", "Group")'>Add Group</a>
 	<h1>Recipes</h1>
 	<br/>
-	@*<table class="table">
-		<tr>
-			<th>Name</th>
-			<th>Category</th>
-			<th>Serves</th>
-			<th>Cook Time</th>
-			<th>Prep Time</th>
-			<th></th>
-		</tr>
-		<tbody>
-		@foreach (var recipe in Model.Recipes)
-		{
-			<tr>
-				<td>@Html.Encode(recipe.Name)</td>
-				<td>@Html.Encode(recipe.RecipeCategory)</td>
-				<td>@Html.Encode(recipe.Serves)</td>
-				<td>@Html.Encode(recipe.CookTimeMinutes)</td>
-				<td>@Html.Encode(recipe.PrepTimeMinutes)</td>
-				<td>
-					@if (recipe.CreatedByUser.Id == userId)
-					{
-						<a href="#" class="fa fa-pencil fa-lg"></a>
-					}
-					<a href="#" class="fa fa-eye fa-lg"></a>
-				</td>
-			</tr>
-
-		}
-		</tbody>
-	</table>*@
-	@*<table class="table">
-		<tr>
-			<th>Name</th>
-			<th></th>
-		</tr>
-		<tbody>
-		@foreach (var group in Model.Groups)
-		{
-			<tr>
-				<td>@group.Name</td>
-				<td>
-					<a href=@Url.Action("EditGroups","Group", new {Id = group.Id}) class="fa fa-pencil fa-lg"></a>
-					<a href="#" class="fa fa-eye fa-lg"></a>
-				</td>
-			</tr>
-
-		}
-		</tbody>
-	</table>*@
-	@*<table class="table">
-							<tr>
-								<th>Name</th>
-								<th></th>
-							</tr>
-							<tbody data-bind="foreach: groups">
-								<tr>
-									<td data-bind="text:Name"></td>
-									<td>
-										<a href="#" class="fa fa-eye fa-lg"></a>
-									</td>
-								</tr>
-							</tbody>
-						</table>*@
 	<table id="recipes">
 		<thead>
 		<tr>
@@ -173,7 +110,7 @@
 								"aTargets": [1],
 								"mData": null,
 								"mRender": function (data, type, full) {
-									return "<a href=/Group/EditGroups/" + data.Id + " class='fa fa-pencil fa-lg'></a>";
+									return "<a class='btn btn-orange' href=/Group/EditGroups/" + data.Id + "  style='margin-right:15px'><i class='fa fa-pencil fa-2x'></i></a>";
 								}
 							}
 						]

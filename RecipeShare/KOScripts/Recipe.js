@@ -24,8 +24,11 @@ var Step = function(narrative) {
 var recipeVm = function(data) {
 	var self = this;
 	self.Id = ko.observable();
-	self.name = ko.observable().extend({required:true});
+	self.name = ko.observable().extend({ required: true });
 	self.foodGroups = ko.observableArray();
+	self.groups = ko.observableArray();
+	self.groups.forRecipe = ko.observableArray();
+	self.chosenGroups = ko.observableArray();
 	self.recipeCategories = ko.observableArray();
 	self.serves = ko.observable().extend({ required: true});
 	self.prepTime = ko.observable().extend({ number: true });
@@ -58,30 +61,6 @@ var recipeVm = function(data) {
 	if (data === parseInt(data, 10)) {
 		self.getRecipe(data);
 	}
-	//if (typeof data != "undefined") {
-	//	self.update(data);
-	//}
-
-
-	//self.getFoodGroups = function() {
-	//	$.ajax({
-	//		type: "POST",
-	//		url: '/Recipe/GetFoodGroups',
-	//		contentType: "application/json; charset=utf-8",
-	//		dataType: "json",
-	//		success: function(data) {
-
-	//			$.each(data, function(index, value) {
-	//				self.foodGroups.push(value);
-	//			});
-
-	//		},
-
-	//		error: function(err) {
-	//			//alert(err.status + " - " + err.statusText);
-	//		}
-	//	});
-	//}
 
 	self.getRecipeCategories = function() {
 		$.ajax({
@@ -98,7 +77,7 @@ var recipeVm = function(data) {
 			},
 
 			error: function(err) {
-				//alert(err.status + " - " + err.statusText);
+				alert(err.status + " - " + err.statusText);
 			}
 		});
 	}
@@ -125,6 +104,13 @@ var recipeVm = function(data) {
 	self.removeStep = function () {
 		self.instructions.remove(this);
 	}
+	self.addGroup = function () {
+		$.each(self.chosenGroups(), function (key, value) {
+			//alert(key + " : " + value);
+			self.groups.forRecipe.push(value);
+			self.groups.remove(value);
+		});
+	}
 	self.saveRecipe = function () {
 		//console.log(ko.toJSON(self));
 		if (self.errors().length === 0) {
@@ -150,17 +136,23 @@ var recipeVm = function(data) {
 			toastrError();
 		}
 	}
-	
+	self.getGroupsForUser = function() {
+		$.ajax({
+			type: "POST",
+			url: '/Group/GetGroupsForUser',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (data) {
+				$.each(data, function(index, value) {
+					self.groups.push(value);
+				});
+			}
+		});
+	}
+	self.getGroupsForUser();
 	self.getRecipeCategories();
 }
 
-
-
-//	},
-//	alert : function() {
-//		alert(foodVm.test.value);
-//	}
-//}
 
 recipeVm.prototype.update = function (data) {
 	var self = this;
@@ -185,35 +177,3 @@ recipeVm.prototype.update = function (data) {
 
 };
 
-
-$(document).ready(function () {
-	//ko.applyBindings(new recipeVm());
-	//$("#foodSearch").autocomplete({
-	//	delay: 500,
-	//	minLength: 3,
-	//	source: function(request, response) {
-	//		$.ajax({
-	//			dataType: "json",
-	//			data: { "search": request.term },
-	//			url: '/Recipe/GetFoods',
-	//			success: function (data) {
-	//				var items = $.map(data, function (item) {
-	//					return {
-	//						label: item.name,
-	//						value: item.id
-	//					};
-	//				});
-	//				response(items);
-	//			}
-				
-	//		});
-	//	},
-	//	select: function (event, ui) {
-	//		$("#foodSearch").val(ui.item.label);
-	//		//cityID = ui.item.id;
-	//		return false;
-	//	}
-	//});
-
-//	foodVm.getFoods();
-});

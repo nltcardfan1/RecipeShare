@@ -70,19 +70,6 @@ namespace RecipeShare.Controllers
 			return Json(recipes);
 		}
 
-		[HttpPost]
-		public JsonResult GetGroupsForUser()
-		{
-			var dbContext = new RecipeShareDbContext();
-			int id = Convert.ToInt32(User.Identity.GetUserId());
-			var groups = dbContext.RecipeGroups.Where(x=> x.AdminId == id || x.AspNetUsers.Contains(dbContext.AspNetUsers.FirstOrDefault(y => y.Id == id)))
-				.Select(group => new
-				{
-					group.Id,
-					group.Name
-
-				}).ToList();
-			return Json(groups);
-		}
+		
 	}
 }

@@ -12,6 +12,8 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using RecipeShare.Models;
+using System.Data.Entity;
+
 
 namespace RecipeShare.Controllers
 {
@@ -48,8 +50,11 @@ namespace RecipeShare.Controllers
 		[HttpPost]
 		public ActionResult SaveRecipe(RecipeViewModel data)
 		{
-
+	
 			var dbContext = new RecipeShareDbContext();
+
+		
+
 			if (data.Id != 0)
 			{
 				var recipeToUpdate = dbContext.Recipes.First(x => x.Id == data.Id);
@@ -60,6 +65,22 @@ namespace RecipeShare.Controllers
 				recipeToUpdate.Serves = data.Serves;
 				dbContext.Ingredients.RemoveRange(dbContext.Ingredients.Where(c => c.RecipeId == data.Id));
 				dbContext.Instructions.RemoveRange(dbContext.Instructions.Where(c => c.RecipeId == data.Id));
+
+				var groupsToUpdate = dbContext.RecipeGroups.Where(x => x.Recipes.Any(a => a.Id == data.Id)).Include(x => x.Recipes).ToList();
+
+				foreach(var group in groupsToUpdate)
+				{
+					group.Recipes.Remove(recipeToUpdate);
+				}
+
+				foreach(var group in groupsToUpdate)
+				{
+					if (group.Recipes == null)
+					{
+						group.Recipes = new List<RecipeModel.Recipe>();
+					}
+					group.Recipes.Add(recipeToUpdate);
+				}
 
 				foreach (var ingredient in data.Ingredients)
 				{
@@ -90,7 +111,8 @@ namespace RecipeShare.Controllers
 					CookTimeMinutes = data.CookTime,
 					PrepTimeMinutes = data.PrepTime,
 					Serves = data.Serves,
-					Ingredients = new List<RecipeModel.Ingredient>()
+					Ingredients = new List<RecipeModel.Ingredient>(),
+					RecipeGroups = new List<GroupModel.RecipeGroup>()
 				};
 
 				foreach(var ingredient in data.Ingredients)
@@ -112,6 +134,11 @@ namespace RecipeShare.Controllers
 						Narrative = data.Instructions[i - 1].Narrative, //Dear lord.... help me
 
 					});
+				}
+
+				foreach (var group in data.Groups)
+				{
+					recipe.RecipeGroups.Add(group);
 				}
 
 				dbContext.Recipes.AddOrUpdate(recipe);

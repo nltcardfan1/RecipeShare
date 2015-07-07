@@ -31,6 +31,20 @@
 			<input type="text" class="form-control" data-bind="textInput: cookTime"/>
 		</div>
 	</div>
+	<div class="col-md-2">
+		<div class="form-group">
+			<label>Groups:</label>
+			<select multiple="multiple" id="groupSelect" class="form-control" data-bind="options: groups, optionsText: 'Name', selectedOptions: chosenGroups"></select>
+		</div>
+		<a href="#" class="btn btn-green" data-bind=" click:addGroup">add</a>
+	</div>
+	<div class="col-md-2">
+		<div class="form-group">
+			<label>Groups:</label>
+			<select multiple="multiple" id="groupsForRecipe" class="form-control" data-bind="options: groups.forRecipe, optionsText: 'Name'"></select>
+		</div>
+		
+	</div>
 	<br/>
 
 	<div class="col-md-12">
@@ -73,14 +87,16 @@
 		<ul class="list-group" data-bind="foreach: instructions">
 			<li class=" list-group-item" data-bind="click:$parent.removeStep">
 				<p>
-					<span data-bind="text:($index()+1)"></span><span>. </span><p class="" data-bind="text:narrative"></p>
-				</p>@*<a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
+				<span data-bind="text:($index()+1)"></span><span>. </span>
+				<p class="" data-bind="text:narrative"></p>
+				@*</p><a href="#" class="btn btn-red pull-right" data-bind="click:$parent.removeIngredient">Remove</a>*@
 			</li>
 
 		</ul>
 	</div>
+
 	<a href="#" class="btn btn-green" data-bind=" click:saveRecipe">save</a>
-	<div class="clearfix"></div>
+		<div class="clearfix"></div>
 </body>
 
 @section scripts{

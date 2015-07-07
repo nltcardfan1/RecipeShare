@@ -114,5 +114,36 @@ namespace RecipeShare.Controllers
 
 		    return Json(ret);
 	    }
+
+		//public ActionResult GetGroupsForUser()
+		//{
+		//	int userId = Convert.ToInt32(User.Identity.GetUserId());
+		//	var dbcontext = new RecipeShareDbContext();
+		//	var ret = dbcontext.RecipeGroups.Where(x => x.AspNetUsers.Any(y => y.Id == userId))
+		//		.Select(x => new
+		//		{
+		//			x.Id,
+		//			Name = x.Name,
+		//		}).ToList();
+
+
+
+		//	return Json(ret);
+		//}
+
+		[HttpPost]
+		public JsonResult GetGroupsForUser()
+		{
+			var dbContext = new RecipeShareDbContext();
+			int id = Convert.ToInt32(User.Identity.GetUserId());
+			var groups = dbContext.RecipeGroups.Where(x => x.AdminId == id || x.AspNetUsers.Contains(dbContext.AspNetUsers.FirstOrDefault(y => y.Id == id)))
+				.Select(group => new
+				{
+					group.Id,
+					group.Name
+
+				}).ToList();
+			return Json(groups);
+		}
     }
 }

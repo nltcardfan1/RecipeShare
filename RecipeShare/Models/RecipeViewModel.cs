@@ -21,5 +21,7 @@ namespace RecipeShare.Models
 		public List<RecipeModel.Instruction> Instructions { get; set; }
 
 		public AspNetUser CreatedByUser { get; set; }
+
+		public List<GroupModel.RecipeGroup> Groups { get; set; }
 	}
 }

@@ -115,22 +115,6 @@ namespace RecipeShare.Controllers
 		    return Json(ret);
 	    }
 
-		//public ActionResult GetGroupsForUser()
-		//{
-		//	int userId = Convert.ToInt32(User.Identity.GetUserId());
-		//	var dbcontext = new RecipeShareDbContext();
-		//	var ret = dbcontext.RecipeGroups.Where(x => x.AspNetUsers.Any(y => y.Id == userId))
-		//		.Select(x => new
-		//		{
-		//			x.Id,
-		//			Name = x.Name,
-		//		}).ToList();
-
-
-
-		//	return Json(ret);
-		//}
-
 		[HttpPost]
 		public JsonResult GetGroupsForUser()
 		{
@@ -141,6 +125,24 @@ namespace RecipeShare.Controllers
 				{
 					group.Id,
 					group.Name
+
+				}).ToList();
+			return Json(groups);
+		}
+
+		[HttpPost]
+		public JsonResult GetGroupsForRecipeAndUser(int recipeId)
+		{
+			var dbContext = new RecipeShareDbContext();
+			int userId = Convert.ToInt32(User.Identity.GetUserId());
+			var recipes = dbContext.RecipeGroups.Include(x => x.Recipes).Where(x => x.Id == recipeId);
+			var groups = dbContext.RecipeGroups.Where(x => x.AdminId == userId || x.AspNetUsers.Contains(dbContext.AspNetUsers.FirstOrDefault(y => y.Id == userId)))
+				.Select(group => new
+				{
+					group.Id,
+					group.Name,
+					assocWithRecipe = recipes.Contains(group)
+					
 
 				}).ToList();
 			return Json(groups);

@@ -34,15 +34,16 @@
 	<div class="col-md-2">
 		<div class="form-group">
 			<label>Groups:</label>
-			<select multiple="multiple" id="groupSelect" class="form-control" data-bind="options: groups, optionsText: 'Name', selectedOptions: chosenGroups"></select>
+			<select multiple="multiple" id="groupSelect" class="form-control" data-bind="options: groups.notForRecipe, optionsText: 'Name', selectedOptions: chosenGroups"></select>
 		</div>
 		<a href="#" class="btn btn-green" data-bind=" click:addGroup">add</a>
 	</div>
 	<div class="col-md-2">
 		<div class="form-group">
 			<label>Groups:</label>
-			<select multiple="multiple" id="groupsForRecipe" class="form-control" data-bind="options: groups.forRecipe, optionsText: 'Name'"></select>
+			<select multiple="multiple" id="groupsForRecipe" class="form-control" data-bind="options: groups, optionsText: 'Name', selectedOptions: chosenGroupsToRemove"></select>
 		</div>
+		<a href="#" class="btn btn-red" data-bind=" click:removeGroup">add</a>
 		
 	</div>
 	<br/>

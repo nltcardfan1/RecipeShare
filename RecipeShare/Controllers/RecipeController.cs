@@ -73,12 +73,14 @@ namespace RecipeShare.Controllers
 					group.Recipes.Remove(recipeToUpdate);
 				}
 
-				foreach(var group in groupsToUpdate)
+				foreach(var group in data.Groups)
 				{
-					if (group.Recipes == null)
+					if(group.Recipes == null)
 					{
 						group.Recipes = new List<RecipeModel.Recipe>();
 					}
+
+
 					group.Recipes.Add(recipeToUpdate);
 				}
 

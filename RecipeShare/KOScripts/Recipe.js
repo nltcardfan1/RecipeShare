@@ -27,8 +27,9 @@ var recipeVm = function(data) {
 	self.name = ko.observable().extend({ required: true });
 	self.foodGroups = ko.observableArray();
 	self.groups = ko.observableArray();
-	self.groups.forRecipe = ko.observableArray();
+	self.groups.notForRecipe = ko.observableArray();
 	self.chosenGroups = ko.observableArray();
+	self.chosenGroupsToRemove = ko.observableArray();
 	self.recipeCategories = ko.observableArray();
 	self.serves = ko.observable().extend({ required: true});
 	self.prepTime = ko.observable().extend({ number: true });
@@ -107,8 +108,15 @@ var recipeVm = function(data) {
 	self.addGroup = function () {
 		$.each(self.chosenGroups(), function (key, value) {
 			//alert(key + " : " + value);
-			self.groups.forRecipe.push(value);
+			self.groups.push(value);
+			self.groups.notForRecipe.remove(value);
+		});
+	}
+	self.removeGroup = function () {
+		$.each(self.chosenGroupsToRemove(), function (key, value) {
+			//alert(key + " : " + value);
 			self.groups.remove(value);
+			self.groups.notForRecipe.push(value);
 		});
 	}
 	self.saveRecipe = function () {
@@ -121,10 +129,6 @@ var recipeVm = function(data) {
 			dataType: "json",
 			data: ko.toJSON(self),
 			success: function (data) {
-
-				$.each(data, function (index, value) {
-					self.foodGroups.push(value);
-				});
 
 			},
 
@@ -149,8 +153,33 @@ var recipeVm = function(data) {
 			}
 		});
 	}
-	self.getGroupsForUser();
+
+	self.GetGroupsForRecipeAndUser = function () {
+		$.ajax({
+			type: "POST",
+			url: '/Group/GetGroupsForRecipeAndUser',
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			data: "{'recipeId':" + data + "}",
+			success: function (data) {
+				$.each(data, function (index, value) {
+					if (value.assocWithRecipe) {
+						self.groups.push(value);
+					} else {
+
+						self.groups.notForRecipe.push(value);
+					}
+				});
+			}
+		});
+	}
+	if (data === parseInt(data, 10)) {
+		self.GetGroupsForRecipeAndUser();
+	} else {
+		self.getGroupsForUser();
+	}
 	self.getRecipeCategories();
+	
 }
 
 
